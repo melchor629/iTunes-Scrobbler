@@ -21,5 +21,5 @@ If you try to use the official Last.fm Scrobbler in 10.12 or higher, you get all
 If you try to use the app building from it's sources, you first need to set up your last.fm developer keys. To achieve that, modify the file `iTunes Scrobbler/sutff/LastfmCredentials.plist` and put there your API Keys.
 
 
-  [1]: https://github.com/melchor629/iTunes-Scrobbler/releases/download/latest/iTunes.Scrobbler.zip
-  [2]: https://github.com/melchor629/iTunes-Scrobbler/releases/download/latest/iTunes.Scrobbler.7z
+  [1]: https://github.com/melchor629/iTunes-Scrobbler/releases/download/v0.1/iTunes.Scrobbler.zip
+  [2]: https://github.com/melchor629/iTunes-Scrobbler/releases/download/v0.1/iTunes.Scrobbler.7z
