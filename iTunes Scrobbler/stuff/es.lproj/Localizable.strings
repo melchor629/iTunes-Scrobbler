@@ -1,0 +1,23 @@
+/* 
+  Strings.strings
+  iTunes Scrobbler
+
+  Created by Melchor Garau Madrigal on 7/1/18.
+  Copyright © 2018 Melchor Garau Madrigal. All rights reserved.
+*/
+"RUN_AT_LOGIN"="Abrir al inicio";
+"ABOUT"="Sobre";
+"QUIT"="Salir";
+"SCROBBLED"="Scrobleado";
+"STATE_INACTIVE"="iTunes no está reproduciendo";
+"LOGGED_IN"="Cuenta: ";
+"LOG_OUT"="Cerrar sesión";
+"NOT_LOGGED_IN"="Iniciar sesión";
+"END_LOG_IN"="Acabar inicio de sesión";
+"IN_CACHE"="Scrobblings en cache: ";
+"SCROBBLE_NOW"="Hacer scrobbling ahora";
+"CANCEL_LOG_IN"="Cancelar inicio de sesión";
+"LOG_IN_MESSAGE_TEXT"="En breves, el navegador se abrirá y se te pedirá que aceptes que el programa acceda a tu cuenta. Cuando hayas aceptado, vuelve a la app y apreta 'Acabar inicio de sesión'.";
+"SEE_SCROBBLINGS"="Ver scrobblings en cache";
+"SEND_SCROBBLE_STATUS"="Hacer scrobblings automáticamente";
+"ABOUT_HTML_TEXT"="<p><b>iTunes Scrobbler</b> es un proyecto hecho por <a href=\"https://github.com/melchor629\">@melchor629</a> para hacer un mejor scrobbler para iTunes en macOS 10.12 o superior.</p><p>El software está bajo licencia <a href=\"https://github.com/melchor629/iTunes-Scrobbler/LICENSE\">??</a>.</p><br/><h3>Traductores</h3><p>{TRANSLATORS}</p><br/><h3>Agradecimientos</h3><p>{THANKS}</p>";

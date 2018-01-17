@@ -1,0 +1,22 @@
+/* 
+  Strings.strings
+  iTunes Scrobbler
+
+  Created by Melchor Garau Madrigal on 7/1/18.
+  Copyright © 2018 Melchor Garau Madrigal. All rights reserved.
+*/
+"RUN_AT_LOGIN"="Obrir a l'inici";
+"ABOUT"="Sobre";
+"QUIT"="Sortir";
+"SCROBBLED"="Scrobletjat";
+"STATE_INACTIVE"="iTunes no està reproduïnt";
+"LOGGED_IN"="Compte: ";
+"LOG_OUT"="Tancar sesió";
+"NOT_LOGGED_IN"="Iniciar sesió";
+"END_LOG_IN"="Acabar inici de sesió";
+"IN_CACHE"="Scrobblings en cache: ";
+"SCROBBLE_NOW"="Fer scrobbling ara";
+"CANCEL_LOG_IN"="Cancel·lar inici de sesió";
+"LOG_IN_MESSAGE_TEXT"="En res, el navegador s'obrirá i se et demanarà que acceptis que el programa accedi al teu compte. Quan hagis acceptat, torna a la app i apreta 'Acabar inici de sesió'.";
+"SEE_SCROBBLINGS"="Veure scrobblings en cache";
+"SEND_SCROBBLE_STATUS"="Fer scrobblings automàticament";

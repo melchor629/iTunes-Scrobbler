@@ -1,0 +1,554 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		480BB6482004E25500A9C9CA /* LastfmCredentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = 480BB6472004E25500A9C9CA /* LastfmCredentials.plist */; };
+		48109F12200640300098A0D8 /* ScrobblingsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48109F11200640300098A0D8 /* ScrobblingsListViewController.swift */; };
+		48277D2C20022953001F07E0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48277D2B20022953001F07E0 /* AppDelegate.swift */; };
+		48277D3120022953001F07E0 /* iTunes_Scrobbler.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 48277D2F20022953001F07E0 /* iTunes_Scrobbler.xcdatamodeld */; };
+		48277D3320022953001F07E0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 48277D3220022953001F07E0 /* Assets.xcassets */; };
+		48277D4020022977001F07E0 /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48277D3F20022976001F07E0 /* ScriptingBridge.framework */; };
+		48277D44200231E8001F07E0 /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48277D43200231E8001F07E0 /* MenuController.swift */; };
+		48277D4620023999001F07E0 /* iTunesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48277D4520023999001F07E0 /* iTunesService.swift */; };
+		48277D4820023C35001F07E0 /* iTunes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48277D4720023C35001F07E0 /* iTunes.swift */; };
+		48277D4E200259F1001F07E0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 48277D4D200259F1001F07E0 /* Main.storyboard */; };
+		483AE8BF2008BBD8008B038B /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483AE8BE2008BBD8008B038B /* AboutViewController.swift */; };
+		4871045F2007676200974EA1 /* VibrantDarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4871045E2007676200974EA1 /* VibrantDarkView.swift */; };
+		4871046120077F7E00974EA1 /* DatabaseFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4871046020077F7E00974EA1 /* DatabaseFacade.swift */; };
+		4871046320078E1700974EA1 /* WindowInFront.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4871046220078E1700974EA1 /* WindowInFront.swift */; };
+		48B165652002673400C54E15 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 48B165672002673400C54E15 /* Localizable.strings */; };
+		48B1656B20028F9A00C54E15 /* Lastfm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B1656A20028F9A00C54E15 /* Lastfm.swift */; };
+		48BCA9882007953A00E436DD /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48BCA9872007953A00E436DD /* ServiceManagement.framework */; };
+		48BCA9902007967100E436DD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48BCA98F2007967100E436DD /* AppDelegate.swift */; };
+		48BCA9922007967100E436DD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 48BCA9912007967100E436DD /* Assets.xcassets */; };
+		48BCA99D200796DC00E436DD /* iTunes Scrobbler Launcher.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = 48BCA98D2007967100E436DD /* iTunes Scrobbler Launcher.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		48F1E2D9200F48E8003AD00C /* Nothing.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 48F1E2D8200F48E8003AD00C /* Nothing.storyboard */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		48BCA99C200796C900E436DD /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Contents/Library/LoginItems;
+			dstSubfolderSpec = 1;
+			files = (
+				48BCA99D200796DC00E436DD /* iTunes Scrobbler Launcher.app in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		480BB6472004E25500A9C9CA /* LastfmCredentials.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = LastfmCredentials.plist; sourceTree = "<group>"; };
+		48109F11200640300098A0D8 /* ScrobblingsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrobblingsListViewController.swift; sourceTree = "<group>"; };
+		48277D2820022953001F07E0 /* iTunes Scrobbler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iTunes Scrobbler.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		48277D2B20022953001F07E0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		48277D3020022953001F07E0 /* iTunes_Scrobbler.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = iTunes_Scrobbler.xcdatamodel; sourceTree = "<group>"; };
+		48277D3220022953001F07E0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		48277D3720022953001F07E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		48277D3F20022976001F07E0 /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
+		48277D43200231E8001F07E0 /* MenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
+		48277D4520023999001F07E0 /* iTunesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iTunesService.swift; sourceTree = "<group>"; };
+		48277D4720023C35001F07E0 /* iTunes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iTunes.swift; sourceTree = "<group>"; };
+		48277D4D200259F1001F07E0 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		483AE8BE2008BBD8008B038B /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
+		4871045E2007676200974EA1 /* VibrantDarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VibrantDarkView.swift; sourceTree = "<group>"; };
+		4871046020077F7E00974EA1 /* DatabaseFacade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseFacade.swift; sourceTree = "<group>"; };
+		4871046220078E1700974EA1 /* WindowInFront.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowInFront.swift; sourceTree = "<group>"; };
+		48B165662002673400C54E15 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		48B165682002688D00C54E15 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		48B165692002689500C54E15 /* ca */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ca; path = ca.lproj/Localizable.strings; sourceTree = "<group>"; };
+		48B1656A20028F9A00C54E15 /* Lastfm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lastfm.swift; sourceTree = "<group>"; };
+		48BCA9872007953A00E436DD /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
+		48BCA98D2007967100E436DD /* iTunes Scrobbler Launcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iTunes Scrobbler Launcher.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		48BCA98F2007967100E436DD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		48BCA9912007967100E436DD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		48BCA9962007967100E436DD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		48F105922003A0A80099BF23 /* iTunes_Scrobbler-BridgingHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iTunes_Scrobbler-BridgingHeader.h"; sourceTree = "<group>"; };
+		48F1E2D8200F48E8003AD00C /* Nothing.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Nothing.storyboard; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		48277D2520022953001F07E0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				48BCA9882007953A00E436DD /* ServiceManagement.framework in Frameworks */,
+				48277D4020022977001F07E0 /* ScriptingBridge.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		48BCA98A2007967100E436DD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		480BB6492004E27D00A9C9CA /* stuff */ = {
+			isa = PBXGroup;
+			children = (
+				48277D3220022953001F07E0 /* Assets.xcassets */,
+				48277D2F20022953001F07E0 /* iTunes_Scrobbler.xcdatamodeld */,
+				48B165672002673400C54E15 /* Localizable.strings */,
+				480BB6472004E25500A9C9CA /* LastfmCredentials.plist */,
+			);
+			path = stuff;
+			sourceTree = "<group>";
+		};
+		48109F10200640140098A0D8 /* views */ = {
+			isa = PBXGroup;
+			children = (
+				48277D4D200259F1001F07E0 /* Main.storyboard */,
+				48109F11200640300098A0D8 /* ScrobblingsListViewController.swift */,
+				4871045E2007676200974EA1 /* VibrantDarkView.swift */,
+				4871046220078E1700974EA1 /* WindowInFront.swift */,
+				483AE8BE2008BBD8008B038B /* AboutViewController.swift */,
+			);
+			path = views;
+			sourceTree = "<group>";
+		};
+		48277D1F20022953001F07E0 = {
+			isa = PBXGroup;
+			children = (
+				48277D2A20022953001F07E0 /* iTunes Scrobbler */,
+				48BCA98E2007967100E436DD /* iTunes Scrobbler Launcher */,
+				48277D2920022953001F07E0 /* Products */,
+				48277D3E20022976001F07E0 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		48277D2920022953001F07E0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				48277D2820022953001F07E0 /* iTunes Scrobbler.app */,
+				48BCA98D2007967100E436DD /* iTunes Scrobbler Launcher.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		48277D2A20022953001F07E0 /* iTunes Scrobbler */ = {
+			isa = PBXGroup;
+			children = (
+				48109F10200640140098A0D8 /* views */,
+				480BB6492004E27D00A9C9CA /* stuff */,
+				48277D2B20022953001F07E0 /* AppDelegate.swift */,
+				48277D43200231E8001F07E0 /* MenuController.swift */,
+				48277D4520023999001F07E0 /* iTunesService.swift */,
+				48277D4720023C35001F07E0 /* iTunes.swift */,
+				48B1656A20028F9A00C54E15 /* Lastfm.swift */,
+				4871046020077F7E00974EA1 /* DatabaseFacade.swift */,
+				48277D3720022953001F07E0 /* Info.plist */,
+				48F105922003A0A80099BF23 /* iTunes_Scrobbler-BridgingHeader.h */,
+			);
+			path = "iTunes Scrobbler";
+			sourceTree = "<group>";
+		};
+		48277D3E20022976001F07E0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				48BCA9872007953A00E436DD /* ServiceManagement.framework */,
+				48277D3F20022976001F07E0 /* ScriptingBridge.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		48BCA98E2007967100E436DD /* iTunes Scrobbler Launcher */ = {
+			isa = PBXGroup;
+			children = (
+				48BCA98F2007967100E436DD /* AppDelegate.swift */,
+				48BCA9912007967100E436DD /* Assets.xcassets */,
+				48BCA9962007967100E436DD /* Info.plist */,
+				48F1E2D8200F48E8003AD00C /* Nothing.storyboard */,
+			);
+			path = "iTunes Scrobbler Launcher";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		48277D2720022953001F07E0 /* iTunes Scrobbler */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 48277D3B20022953001F07E0 /* Build configuration list for PBXNativeTarget "iTunes Scrobbler" */;
+			buildPhases = (
+				48277D2420022953001F07E0 /* Sources */,
+				48277D2520022953001F07E0 /* Frameworks */,
+				48277D2620022953001F07E0 /* Resources */,
+				48BCA99C200796C900E436DD /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "iTunes Scrobbler";
+			productName = "iTunes Scrobbler";
+			productReference = 48277D2820022953001F07E0 /* iTunes Scrobbler.app */;
+			productType = "com.apple.product-type.application";
+		};
+		48BCA98C2007967100E436DD /* iTunes Scrobbler Launcher */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 48BCA9982007967100E436DD /* Build configuration list for PBXNativeTarget "iTunes Scrobbler Launcher" */;
+			buildPhases = (
+				48BCA9892007967100E436DD /* Sources */,
+				48BCA98A2007967100E436DD /* Frameworks */,
+				48BCA98B2007967100E436DD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "iTunes Scrobbler Launcher";
+			productName = "iTunes Scrobbler Launcher";
+			productReference = 48BCA98D2007967100E436DD /* iTunes Scrobbler Launcher.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		48277D2020022953001F07E0 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0920;
+				LastUpgradeCheck = 0920;
+				ORGANIZATIONNAME = "Melchor Garau Madrigal";
+				TargetAttributes = {
+					48277D2720022953001F07E0 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Manual;
+					};
+					48BCA98C2007967100E436DD = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 0;
+							};
+						};
+					};
+				};
+			};
+			buildConfigurationList = 48277D2320022953001F07E0 /* Build configuration list for PBXProject "iTunes Scrobbler" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+				es,
+				ca,
+			);
+			mainGroup = 48277D1F20022953001F07E0;
+			productRefGroup = 48277D2920022953001F07E0 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				48277D2720022953001F07E0 /* iTunes Scrobbler */,
+				48BCA98C2007967100E436DD /* iTunes Scrobbler Launcher */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		48277D2620022953001F07E0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				48277D3320022953001F07E0 /* Assets.xcassets in Resources */,
+				48277D4E200259F1001F07E0 /* Main.storyboard in Resources */,
+				480BB6482004E25500A9C9CA /* LastfmCredentials.plist in Resources */,
+				48B165652002673400C54E15 /* Localizable.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		48BCA98B2007967100E436DD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				48F1E2D9200F48E8003AD00C /* Nothing.storyboard in Resources */,
+				48BCA9922007967100E436DD /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		48277D2420022953001F07E0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				48277D44200231E8001F07E0 /* MenuController.swift in Sources */,
+				48277D4820023C35001F07E0 /* iTunes.swift in Sources */,
+				483AE8BF2008BBD8008B038B /* AboutViewController.swift in Sources */,
+				48277D3120022953001F07E0 /* iTunes_Scrobbler.xcdatamodeld in Sources */,
+				4871046120077F7E00974EA1 /* DatabaseFacade.swift in Sources */,
+				4871045F2007676200974EA1 /* VibrantDarkView.swift in Sources */,
+				48277D4620023999001F07E0 /* iTunesService.swift in Sources */,
+				48B1656B20028F9A00C54E15 /* Lastfm.swift in Sources */,
+				48109F12200640300098A0D8 /* ScrobblingsListViewController.swift in Sources */,
+				4871046320078E1700974EA1 /* WindowInFront.swift in Sources */,
+				48277D2C20022953001F07E0 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		48BCA9892007967100E436DD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				48BCA9902007967100E436DD /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		48B165672002673400C54E15 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				48B165662002673400C54E15 /* en */,
+				48B165682002688D00C54E15 /* es */,
+				48B165692002689500C54E15 /* ca */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		48277D3920022953001F07E0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		48277D3A20022953001F07E0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+			};
+			name = Release;
+		};
+		48277D3C20022953001F07E0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = "iTunes Scrobbler/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				PRODUCT_BUNDLE_IDENTIFIER = "me.melchor9000.iTunes-Scrobbler";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "iTunes Scrobbler/iTunes_Scrobbler-BridgingHeader.h";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Debug;
+		};
+		48277D3D20022953001F07E0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = "iTunes Scrobbler/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				PRODUCT_BUNDLE_IDENTIFIER = "me.melchor9000.iTunes-Scrobbler";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "iTunes Scrobbler/iTunes_Scrobbler-BridgingHeader.h";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Release;
+		};
+		48BCA9992007967100E436DD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = "iTunes Scrobbler Launcher/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				PRODUCT_BUNDLE_IDENTIFIER = "me.melchor9000.iTunes-Scrobbler-Launcher";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+			};
+			name = Debug;
+		};
+		48BCA99A2007967100E436DD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = "iTunes Scrobbler Launcher/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				PRODUCT_BUNDLE_IDENTIFIER = "me.melchor9000.iTunes-Scrobbler-Launcher";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		48277D2320022953001F07E0 /* Build configuration list for PBXProject "iTunes Scrobbler" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				48277D3920022953001F07E0 /* Debug */,
+				48277D3A20022953001F07E0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		48277D3B20022953001F07E0 /* Build configuration list for PBXNativeTarget "iTunes Scrobbler" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				48277D3C20022953001F07E0 /* Debug */,
+				48277D3D20022953001F07E0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		48BCA9982007967100E436DD /* Build configuration list for PBXNativeTarget "iTunes Scrobbler Launcher" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				48BCA9992007967100E436DD /* Debug */,
+				48BCA99A2007967100E436DD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		48277D2F20022953001F07E0 /* iTunes_Scrobbler.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				48277D3020022953001F07E0 /* iTunes_Scrobbler.xcdatamodel */,
+			);
+			currentVersion = 48277D3020022953001F07E0 /* iTunes_Scrobbler.xcdatamodel */;
+			path = iTunes_Scrobbler.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 48277D2020022953001F07E0 /* Project object */;
+}

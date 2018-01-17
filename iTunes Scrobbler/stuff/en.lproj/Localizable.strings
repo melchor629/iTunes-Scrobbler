@@ -1,0 +1,22 @@
+/* 
+  Strings.strings
+  iTunes Scrobbler
+
+  Created by Melchor Garau Madrigal on 7/1/18.
+  Copyright © 2018 Melchor Garau Madrigal. All rights reserved.
+*/
+"RUN_AT_LOGIN"="Run at login";
+"ABOUT"="About";
+"QUIT"="Quit";
+"SCROBBLED"="Scrobbled";
+"STATE_INACTIVE"="iTunes is not playing";
+"LOGGED_IN"="Logged in as ";
+"LOG_OUT"="Log out";
+"NOT_LOGGED_IN"="Log in";
+"END_LOG_IN"="Done log in";
+"IN_CACHE"="Scrobbles in cache: ";
+"SCROBBLE_NOW"="Scrobble now";
+"CANCEL_LOG_IN"="Cancel log in";
+"LOG_IN_MESSAGE_TEXT"="In an instant, the browser will open and you'll be asked to allow the app to access to your account. Once accepted, go to the app again and press 'Done log in'.";
+"SEE_SCROBBLINGS"="See cached scrobbes";
+"SEND_SCROBBLE_STATUS"="Do scrobble automatically";
