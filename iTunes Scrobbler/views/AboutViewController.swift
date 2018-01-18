@@ -24,6 +24,7 @@ class AboutViewController: NSViewController {
 
     private static let thanks = [
         ("@Alkesst", "https://alkesst.github.io/#/", "Testing the app"),
+        ("@amgxv", "https://github.com/amgxv", "Testing the app")
     ]
 
     override func viewDidLoad() {
@@ -33,6 +34,8 @@ class AboutViewController: NSViewController {
         let aboutHtmlText = NSLocalizedString("ABOUT_HTML_TEXT", comment: "About: About text in HTML format")
             .replacingOccurrences(of: "{TRANSLATORS}", with: translatorsHtml)
             .replacingOccurrences(of: "{THANKS}", with: thanksHtml)
+            .replacingOccurrences(of: "{LINK1}", with: "<a href=\"https://github.com/melchor629\">@melchor629</a>")
+            .replacingOccurrences(of: "{LINK2}", with: "<a href=\"https://github.com/melchor629/iTunes-Scrobbler/blob/master/LICENSE\">GPL-3.0</a>")
         let html = """
         <head>
             <meta charset="utf-8">

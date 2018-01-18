@@ -20,3 +20,4 @@
 "LOG_IN_MESSAGE_TEXT"="In an instant, the browser will open and you'll be asked to allow the app to access to your account. Once accepted, go to the app again and press 'Done log in'.";
 "SEE_SCROBBLINGS"="See cached scrobbes";
 "SEND_SCROBBLE_STATUS"="Do scrobble automatically";
+"ABOUT_HTML_TEXT"="<p><b>iTunes Scrobbler</b> is a project made by {LINK1} to make a better iTunes scrobbler on macOS 10.12 o higher.</p><p>The software is under {LINK2} license.</p><br/><h3>Translators</h3><p>{TRANSLATORS}</p><br/><h3>Thanks to</h3><p>{THANKS}</p>";

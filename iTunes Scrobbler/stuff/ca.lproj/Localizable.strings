@@ -20,3 +20,4 @@
 "LOG_IN_MESSAGE_TEXT"="En res, el navegador s'obrirá i se et demanarà que acceptis que el programa accedi al teu compte. Quan hagis acceptat, torna a la app i apreta 'Acabar inici de sesió'.";
 "SEE_SCROBBLINGS"="Veure scrobblings en cache";
 "SEND_SCROBBLE_STATUS"="Fer scrobblings automàticament";
+"ABOUT_HTML_TEXT"="<p><b>iTunes Scrobbler</b> es un projecte fet per {LINK1} per conseguir un millor scrobbler per iTunes en macOS 10.12 o superior.</p><p>El software està baix la licència {LINK2}.</p><br/><h3>Traductors</h3><p>{TRANSLATORS}</p><br/><h3>Agraïments</h3><p>{THANKS}</p>";
