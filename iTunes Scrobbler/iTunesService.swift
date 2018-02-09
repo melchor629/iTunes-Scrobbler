@@ -109,7 +109,7 @@ class iTunesService: NSObject {
             object: nil
         )
 
-        if NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.iTunes").count > 0 {
+        if isRunning {
             if iTunes.playerState != .stopped {
                 state = .playing
                 checkSongChanges()
@@ -135,7 +135,7 @@ class iTunesService: NSObject {
         }
     }
 
-    @objc func checkSongChanges() {
+    private func checkSongChanges() {
         let currentSong = SongMetadata(track: iTunes.currentTrack!)
         if currentSong != self.metadata {
             self.metadata = currentSong
@@ -144,20 +144,32 @@ class iTunesService: NSObject {
         checkForScrobbling()
     }
 
+    private var isRunning: Bool {
+        get {
+            return NSWorkspace.shared.runningApplications
+                .filter { $0.bundleIdentifier == "com.apple.iTunes" }
+                .count > 0
+        }
+    }
+
     private func checkForScrobbling(inside: Bool = false) {
-        if !scrobbled {
-            let position = iTunes.playerPosition!
-            let scrobbleTime = min(metadata.duration / 2, 4 * 60)
-            if position < scrobbleTime {
-                let timeToHalf = Int((scrobbleTime - position) * 1000)
-                log("Next scrobbling checc \(timeToHalf)ms")
-                DispatchQueue.main.asyncAfter(deadline: DispatchTimeInterval.milliseconds(timeToHalf).fromNow) {
-                    self.checkForScrobbling(inside: true)
+        if !self.isRunning {
+            state = .inactive
+        } else {
+            if !scrobbled {
+                let position = iTunes.playerPosition!
+                let scrobbleTime = min(metadata.duration / 2, 4 * 60)
+                if position < scrobbleTime {
+                    let timeToHalf = Int((scrobbleTime - position) * 1000)
+                    log("Next scrobbling checc \(timeToHalf)ms")
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTimeInterval.milliseconds(timeToHalf).fromNow) {
+                        self.checkForScrobbling(inside: true)
+                    }
+                } else {
+                    inside ? log("Scrobbling from inside!") : log("Scrobbling!")
+                    scrobbled = true
+                    delegate?.iTunesScrobbleTime(metadata, timeStartPlayingSong!)
                 }
-            } else {
-                inside ? log("Scrobbling from inside!") : log("Scrobbling!")
-                scrobbled = true
-                delegate?.iTunesScrobbleTime(metadata, timeStartPlayingSong!)
             }
         }
     }
