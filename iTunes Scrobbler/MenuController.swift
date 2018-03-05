@@ -204,7 +204,6 @@ class MenuController: NSObject {
     @objc func changeRunAtLogin() {
         openAtLogin = !openAtLogin
         DBFacade.shared.openAtLogin = openAtLogin
-        //TODO Do it effectively
         log("Changed open at login to \(openAtLogin) " + (SMLoginItemSetEnabled("me.melchor9000.iTunes-Scrobbler-Launcher" as CFString, openAtLogin) ? "sucessfully" : "unsuccessfully"))
     }
 
