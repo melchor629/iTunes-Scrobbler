@@ -22,3 +22,4 @@
 "SEND_SCROBBLE_STATUS"="Hacer scrobblings automáticamente";
 "ABOUT_HTML_TEXT"="<p><b>iTunes Scrobbler</b> es un proyecto hecho por {LINK1} para hacer un mejor scrobbler para iTunes en macOS 10.12 o superior.</p><p>El software está bajo licencia {LINK2}.</p><br/><h3>Traductores</h3><p>{TRANSLATORS}</p><br/><h3>Agradecimientos</h3><p>{THANKS}</p>";
 "CACHED_SCROBBLINGS"="Scrobblings en caché";
+"AUTO_UPDATE"="Auto actualizar app";

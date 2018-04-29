@@ -27,8 +27,48 @@
 		48BCA9902007967100E436DD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48BCA98F2007967100E436DD /* AppDelegate.swift */; };
 		48BCA9922007967100E436DD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 48BCA9912007967100E436DD /* Assets.xcassets */; };
 		48BCA99D200796DC00E436DD /* iTunes Scrobbler Launcher.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = 48BCA98D2007967100E436DD /* iTunes Scrobbler Launcher.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		48D6609D2095CB27004F0FD0 /* GithubUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D6609C2095CB27004F0FD0 /* GithubUpdater.swift */; };
+		48D660B02095DE02004F0FD0 /* Zip.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48D660AB2095DDDC004F0FD0 /* Zip.framework */; };
 		48F1E2D9200F48E8003AD00C /* Nothing.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 48F1E2D8200F48E8003AD00C /* Nothing.storyboard */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		48D660A62095DDDC004F0FD0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 48D6609E2095DDDB004F0FD0 /* Zip.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 347E3A741C1DFFB500A11FD3;
+			remoteInfo = Zip;
+		};
+		48D660A82095DDDC004F0FD0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 48D6609E2095DDDB004F0FD0 /* Zip.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 347E3A7E1C1DFFB500A11FD3;
+			remoteInfo = ZipTests;
+		};
+		48D660AA2095DDDC004F0FD0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 48D6609E2095DDDB004F0FD0 /* Zip.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 343F50FF1C8DAEEC0028C434;
+			remoteInfo = "Zip OSX";
+		};
+		48D660AC2095DDDC004F0FD0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 48D6609E2095DDDB004F0FD0 /* Zip.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 343F51081C8DAEEC0028C434;
+			remoteInfo = "Zip OSXTests";
+		};
+		48D660AE2095DDDC004F0FD0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 48D6609E2095DDDB004F0FD0 /* Zip.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 342545B51CE525B200336074;
+			remoteInfo = "Zip tvOS";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		48BCA99C200796C900E436DD /* CopyFiles */ = {
@@ -69,6 +109,8 @@
 		48BCA98F2007967100E436DD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		48BCA9912007967100E436DD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		48BCA9962007967100E436DD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		48D6609C2095CB27004F0FD0 /* GithubUpdater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubUpdater.swift; sourceTree = "<group>"; };
+		48D6609E2095DDDB004F0FD0 /* Zip.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Zip.xcodeproj; path = Zip/Zip.xcodeproj; sourceTree = "<group>"; };
 		48F105922003A0A80099BF23 /* iTunes_Scrobbler-BridgingHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iTunes_Scrobbler-BridgingHeader.h"; sourceTree = "<group>"; };
 		48F1E2D8200F48E8003AD00C /* Nothing.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Nothing.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -78,6 +120,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48D660B02095DE02004F0FD0 /* Zip.framework in Frameworks */,
 				48BCA9882007953A00E436DD /* ServiceManagement.framework in Frameworks */,
 				48277D4020022977001F07E0 /* ScriptingBridge.framework in Frameworks */,
 			);
@@ -119,6 +162,7 @@
 		48277D1F20022953001F07E0 = {
 			isa = PBXGroup;
 			children = (
+				48D6609E2095DDDB004F0FD0 /* Zip.xcodeproj */,
 				48277D2A20022953001F07E0 /* iTunes Scrobbler */,
 				48BCA98E2007967100E436DD /* iTunes Scrobbler Launcher */,
 				48277D2920022953001F07E0 /* Products */,
@@ -148,6 +192,7 @@
 				4871046020077F7E00974EA1 /* DatabaseFacade.swift */,
 				48277D3720022953001F07E0 /* Info.plist */,
 				48F105922003A0A80099BF23 /* iTunes_Scrobbler-BridgingHeader.h */,
+				48D6609C2095CB27004F0FD0 /* GithubUpdater.swift */,
 			);
 			path = "iTunes Scrobbler";
 			sourceTree = "<group>";
@@ -170,6 +215,18 @@
 				48F1E2D8200F48E8003AD00C /* Nothing.storyboard */,
 			);
 			path = "iTunes Scrobbler Launcher";
+			sourceTree = "<group>";
+		};
+		48D6609F2095DDDB004F0FD0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				48D660A72095DDDC004F0FD0 /* Zip.framework */,
+				48D660A92095DDDC004F0FD0 /* ZipTests.xctest */,
+				48D660AB2095DDDC004F0FD0 /* Zip.framework */,
+				48D660AD2095DDDC004F0FD0 /* Zip OSXTests.xctest */,
+				48D660AF2095DDDC004F0FD0 /* Zip.framework */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -248,6 +305,12 @@
 			mainGroup = 48277D1F20022953001F07E0;
 			productRefGroup = 48277D2920022953001F07E0 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 48D6609F2095DDDB004F0FD0 /* Products */;
+					ProjectRef = 48D6609E2095DDDB004F0FD0 /* Zip.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				48277D2720022953001F07E0 /* iTunes Scrobbler */,
@@ -255,6 +318,44 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		48D660A72095DDDC004F0FD0 /* Zip.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Zip.framework;
+			remoteRef = 48D660A62095DDDC004F0FD0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		48D660A92095DDDC004F0FD0 /* ZipTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = ZipTests.xctest;
+			remoteRef = 48D660A82095DDDC004F0FD0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		48D660AB2095DDDC004F0FD0 /* Zip.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Zip.framework;
+			remoteRef = 48D660AA2095DDDC004F0FD0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		48D660AD2095DDDC004F0FD0 /* Zip OSXTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Zip OSXTests.xctest";
+			remoteRef = 48D660AC2095DDDC004F0FD0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		48D660AF2095DDDC004F0FD0 /* Zip.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Zip.framework;
+			remoteRef = 48D660AE2095DDDC004F0FD0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		48277D2620022953001F07E0 /* Resources */ = {
@@ -294,6 +395,7 @@
 				48B1656B20028F9A00C54E15 /* Lastfm.swift in Sources */,
 				48109F12200640300098A0D8 /* ScrobblingsListViewController.swift in Sources */,
 				4871046320078E1700974EA1 /* WindowInFront.swift in Sources */,
+				48D6609D2095CB27004F0FD0 /* GithubUpdater.swift in Sources */,
 				48277D2C20022953001F07E0 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -29,11 +29,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, iTunesServiceDelegate {
     internal var account: NSManagedObject?
     internal let lastfm: Lastfm
     internal let storyboard: NSStoryboard
+    internal let updater: GithubUpdater?
 
     override init() {
         do {
             self.lastfm = try Lastfm()
             self.storyboard = NSStoryboard(name: NSStoryboard.Name(rawValue: "Main"), bundle: nil)
+            if let token = Bundle.main.infoDictionary!["GithubToken"] as? String {
+                self.updater = GithubUpdater(token)
+            } else {
+                self.updater = nil
+            }
             super.init()
         } catch let error {
             NSAlert(error: error).runModal()
@@ -70,6 +76,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, iTunesServiceDelegate {
                 name: Notification.Name(rawValue: "me.melchor9000.iTunes-Scrobbler.killLauncher"),
                 object: Bundle.main.bundleIdentifier!
             )
+        }
+
+        if updater != nil {
+            menu.autoUpdate = DBFacade.shared.autoUpdate
+            if menu.autoUpdate! {
+                updater!.start()
+            }
         }
     }
 

@@ -139,4 +139,13 @@ class DBFacade {
         }
     }
 
+    internal var autoUpdate: Bool {
+        get {
+            return Bool(getter("AUTO_UPDATE", "false"))!
+        }
+        set {
+            setter("AUTO_UPDATE", "\(newValue)")
+        }
+    }
+
 }

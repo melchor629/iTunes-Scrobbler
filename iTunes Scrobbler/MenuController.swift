@@ -22,6 +22,7 @@ class MenuController: NSObject {
     internal var loggingIn = false
     internal var mustScrobble = true
     internal var openAtLogin = false
+    internal var autoUpdate: Bool? = nil
 
     override init() {
         super.init()
@@ -96,6 +97,11 @@ class MenuController: NSObject {
             action: #selector(MenuController.changeRunAtLogin),
             keyEquivalent: ""
         ).target = self
+        statusMenu.addItem(
+            withTitle: NSLocalizedString("AUTO_UPDATE", comment: "Menu: Auto update"),
+            action: #selector(MenuController.changeAutoUpdate),
+            keyEquivalent: ""
+            ).target = self
         statusMenu.addItem(NSMenuItem.separator())
 
         statusMenu.addItem(
@@ -138,6 +144,9 @@ class MenuController: NSObject {
         } else if menuItem.action == #selector(MenuController.changeSendScrobbleStatus) {
             menuItem.isHidden = !loggedIn || loggingIn
             menuItem.state = mustScrobble ? .on : .off
+        } else if menuItem.action == #selector(MenuController.changeAutoUpdate) {
+            menuItem.isHidden = autoUpdate == nil
+            menuItem.state = autoUpdate != nil && autoUpdate! ? .on : .off
         }
         return true
     }
@@ -214,6 +223,16 @@ class MenuController: NSObject {
 
     @objc func quit() {
         NSApplication.shared.terminate(self)
+    }
+
+    @objc func changeAutoUpdate() {
+        autoUpdate! = !autoUpdate!
+        DBFacade.shared.autoUpdate = autoUpdate!
+        if autoUpdate! {
+            (NSApp.delegate! as! AppDelegate).updater!.start()
+        } else {
+            (NSApp.delegate! as! AppDelegate).updater!.stop()
+        }
     }
 
     internal func setSongState(_ metadata: SongMetadata, scrobbled: Bool) {
