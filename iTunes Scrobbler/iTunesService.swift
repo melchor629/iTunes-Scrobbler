@@ -119,6 +119,8 @@ class iTunesService: NSObject {
         } else {
             state = .inactive
         }
+
+        checkForStatus()
     }
 
     @objc func playerStateChanged(_ notification: Notification) {
@@ -171,6 +173,17 @@ class iTunesService: NSObject {
                     delegate?.iTunesScrobbleTime(metadata, timeStartPlayingSong!)
                 }
             }
+        }
+    }
+
+    private func checkForStatus() {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + DispatchTimeInterval.seconds(10)) {
+            if self.state != .inactive && !self.isRunning {
+                self.state = .inactive
+            } else if self.state != .playing && self.isRunning && self.iTunes.playerState == .playing {
+                self.state = .playing
+            }
+            self.checkForStatus()
         }
     }
 
