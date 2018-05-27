@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		480BB6482004E25500A9C9CA /* LastfmCredentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = 480BB6472004E25500A9C9CA /* LastfmCredentials.plist */; };
 		48109F12200640300098A0D8 /* ScrobblingsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48109F11200640300098A0D8 /* ScrobblingsListViewController.swift */; };
+		481CA84720BB01640042CE99 /* Tokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 481CA84620BB01640042CE99 /* Tokens.swift */; };
 		48277D2C20022953001F07E0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48277D2B20022953001F07E0 /* AppDelegate.swift */; };
 		48277D3120022953001F07E0 /* iTunes_Scrobbler.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 48277D2F20022953001F07E0 /* iTunes_Scrobbler.xcdatamodeld */; };
 		48277D3320022953001F07E0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 48277D3220022953001F07E0 /* Assets.xcassets */; };
@@ -84,8 +84,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		480BB6472004E25500A9C9CA /* LastfmCredentials.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = LastfmCredentials.plist; sourceTree = "<group>"; };
 		48109F11200640300098A0D8 /* ScrobblingsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrobblingsListViewController.swift; sourceTree = "<group>"; };
+		481CA84620BB01640042CE99 /* Tokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tokens.swift; sourceTree = "<group>"; };
 		48277D2820022953001F07E0 /* iTunes Scrobbler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iTunes Scrobbler.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		48277D2B20022953001F07E0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		48277D3020022953001F07E0 /* iTunes_Scrobbler.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = iTunes_Scrobbler.xcdatamodel; sourceTree = "<group>"; };
@@ -142,7 +142,7 @@
 				48277D3220022953001F07E0 /* Assets.xcassets */,
 				48277D2F20022953001F07E0 /* iTunes_Scrobbler.xcdatamodeld */,
 				48B165672002673400C54E15 /* Localizable.strings */,
-				480BB6472004E25500A9C9CA /* LastfmCredentials.plist */,
+				48277D3720022953001F07E0 /* Info.plist */,
 			);
 			path = stuff;
 			sourceTree = "<group>";
@@ -190,9 +190,9 @@
 				48277D4720023C35001F07E0 /* iTunes.swift */,
 				48B1656A20028F9A00C54E15 /* Lastfm.swift */,
 				4871046020077F7E00974EA1 /* DatabaseFacade.swift */,
-				48277D3720022953001F07E0 /* Info.plist */,
 				48F105922003A0A80099BF23 /* iTunes_Scrobbler-BridgingHeader.h */,
 				48D6609C2095CB27004F0FD0 /* GithubUpdater.swift */,
+				481CA84620BB01640042CE99 /* Tokens.swift */,
 			);
 			path = "iTunes Scrobbler";
 			sourceTree = "<group>";
@@ -364,7 +364,6 @@
 			files = (
 				48277D3320022953001F07E0 /* Assets.xcassets in Resources */,
 				48277D4E200259F1001F07E0 /* Main.storyboard in Resources */,
-				480BB6482004E25500A9C9CA /* LastfmCredentials.plist in Resources */,
 				48B165652002673400C54E15 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -397,6 +396,7 @@
 				4871046320078E1700974EA1 /* WindowInFront.swift in Sources */,
 				48D6609D2095CB27004F0FD0 /* GithubUpdater.swift in Sources */,
 				48277D2C20022953001F07E0 /* AppDelegate.swift in Sources */,
+				481CA84720BB01640042CE99 /* Tokens.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

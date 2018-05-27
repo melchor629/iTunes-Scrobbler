@@ -33,27 +33,9 @@ class Lastfm {
         set { self.userToken = newValue }
     }
 
-    init() throws {
-        let path = Bundle.main.path(forResource: "LastfmCredentials", ofType: "plist")
-        if let path = path {
-            let dict = NSDictionary(contentsOfFile: path)
-            if let dict = dict {
-                if let api_key = dict.object(forKey: "api_key") as? String {
-                    apiKey = api_key
-                } else {
-                    throw LastfmError.CredentialsFileInvalid("api_key not defined")
-                }
-                if let secret = dict.object(forKey: "secret") as? String {
-                    self.secret = secret
-                } else {
-                    throw LastfmError.CredentialsFileInvalid("secret not defined")
-                }
-            } else {
-                throw LastfmError.CredentialsFileInvalid("plist is invalid")
-            }
-        } else {
-            throw LastfmError.CredentialsFileNotFound
-        }
+    init() {
+        self.apiKey = Tokens.lastfmApiKey
+        self.secret = Tokens.lastfmSecret
     }
 
     internal func startAutentication() {

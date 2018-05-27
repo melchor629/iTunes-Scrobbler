@@ -32,19 +32,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, iTunesServiceDelegate {
     internal let updater: GithubUpdater?
 
     override init() {
-        do {
-            self.lastfm = try Lastfm()
-            self.storyboard = NSStoryboard(name: NSStoryboard.Name(rawValue: "Main"), bundle: nil)
-            if let token = Bundle.main.infoDictionary!["GithubToken"] as? String {
-                self.updater = GithubUpdater(token)
-            } else {
-                self.updater = nil
-            }
-            super.init()
-        } catch let error {
-            NSAlert(error: error).runModal()
-            exit(1)
-        }
+        self.storyboard = NSStoryboard(name: NSStoryboard.Name(rawValue: "Main"), bundle: nil)
+        self.lastfm = Lastfm()
+        self.updater = GithubUpdater()
+        super.init()
     }
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {

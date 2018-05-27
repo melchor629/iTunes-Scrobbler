@@ -86,8 +86,8 @@ class GithubUpdater {
     private var backgroundTask: DispatchWorkItem?
     private var pendingToRestart = false
 
-    init(_ token: String) {
-        self.token = token
+    init() {
+        self.token = Tokens.githubToken
         self.appVersion = Version(Bundle.main.infoDictionary!["CFBundleShortVersionString"]! as! String)
     }
 
