@@ -544,7 +544,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = "iTunes Scrobbler/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/iTunes Scrobbler/stuff/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = "me.melchor9000.iTunes-Scrobbler";
@@ -562,7 +562,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = "iTunes Scrobbler/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/iTunes Scrobbler/stuff/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = "me.melchor9000.iTunes-Scrobbler";
