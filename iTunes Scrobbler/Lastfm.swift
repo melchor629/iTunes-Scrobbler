@@ -15,7 +15,7 @@ enum LastfmError: Error {
 
 fileprivate extension String {
     fileprivate func urlEncode() -> String {
-        return self.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
+        return self.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!.replacingOccurrences(of: "&", with: "%26")
     }
 }
 
