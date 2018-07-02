@@ -21,6 +21,7 @@
 		4871045F2007676200974EA1 /* VibrantDarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4871045E2007676200974EA1 /* VibrantDarkView.swift */; };
 		4871046120077F7E00974EA1 /* DatabaseFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4871046020077F7E00974EA1 /* DatabaseFacade.swift */; };
 		4871046320078E1700974EA1 /* WindowInFront.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4871046220078E1700974EA1 /* WindowInFront.swift */; };
+		4871B73E20EA322E00EB6032 /* Zip.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 48D660AB2095DDDC004F0FD0 /* Zip.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		48B165652002673400C54E15 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 48B165672002673400C54E15 /* Localizable.strings */; };
 		48B1656B20028F9A00C54E15 /* Lastfm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B1656A20028F9A00C54E15 /* Lastfm.swift */; };
 		48BCA9882007953A00E436DD /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48BCA9872007953A00E436DD /* ServiceManagement.framework */; };
@@ -71,6 +72,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		4871B73D20EA321700EB6032 /* Copy Files */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 12;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				4871B73E20EA322E00EB6032 /* Zip.framework in Copy Files */,
+			);
+			name = "Copy Files";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		48BCA99C200796C900E436DD /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -240,6 +252,7 @@
 				48277D2520022953001F07E0 /* Frameworks */,
 				48277D2620022953001F07E0 /* Resources */,
 				48BCA99C200796C900E436DD /* CopyFiles */,
+				4871B73D20EA321700EB6032 /* Copy Files */,
 			);
 			buildRules = (
 			);
