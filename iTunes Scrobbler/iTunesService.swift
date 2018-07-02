@@ -178,7 +178,7 @@ class iTunesService: NSObject {
 
     private func checkForStatus() {
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + DispatchTimeInterval.seconds(10)) {
-            if self.state != .inactive && !self.isRunning {
+            if self.state != .inactive && (!self.isRunning || self.iTunes.playerState != .playing) {
                 self.state = .inactive
             } else if self.state != .playing && self.isRunning && self.iTunes.playerState == .playing {
                 self.state = .playing
