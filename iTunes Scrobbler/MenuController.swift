@@ -201,8 +201,7 @@ class MenuController: NSObject {
     }
 
     @objc func showCachedScrobblings() {
-        let wc = (NSApp.delegate! as! AppDelegate).storyboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "scrobbleList")) as! NSWindowController
-        wc.showWindow(self)
+        (NSApp.delegate! as! AppDelegate).openScrobblingsCacheWindow()
     }
 
     @objc func changeSendScrobbleStatus() {
@@ -217,8 +216,7 @@ class MenuController: NSObject {
     }
 
     @objc func openAboutWindow() {
-        let wc = (NSApp.delegate! as! AppDelegate).storyboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "about")) as! NSWindowController
-        wc.showWindow(self)
+        (NSApp.delegate! as! AppDelegate).openAboutWindow()
     }
 
     @objc func quit() {

@@ -19,7 +19,7 @@ internal func log(_ obj: Any) {
 }
 
 @NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate, iTunesServiceDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate, iTunesServiceDelegate, NSWindowDelegate {
 
     internal static let addedScrobbling = NSNotification.Name(rawValue: "me.melchor9000.iTunes-Scrobbler.AppDelegate.addedScrobbling")
     internal static let sentScrobblings = NSNotification.Name(rawValue: "me.melchor9000.iTunes-Scrobbler.AppDelegate.sentScrobblings")
@@ -30,6 +30,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, iTunesServiceDelegate {
     internal let lastfm: Lastfm
     internal let storyboard: NSStoryboard
     internal let updater: GithubUpdater?
+    internal var aboutWindow: NSWindowController?
+    internal var scrobblingsWindow: NSWindowController?
 
     override init() {
         self.storyboard = NSStoryboard(name: NSStoryboard.Name(rawValue: "Main"), bundle: nil)
@@ -88,6 +90,38 @@ class AppDelegate: NSObject, NSApplicationDelegate, iTunesServiceDelegate {
 
     @objc func deletedRowInTable(_ notification: NSNotification) {
         updateScrobbleCacheCount()
+    }
+
+    internal func openAboutWindow() {
+        if aboutWindow == nil {
+            aboutWindow = self.storyboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "about")) as? NSWindowController
+            aboutWindow!.showWindow(self)
+            aboutWindow!.window!.delegate = self
+            NSLog("Opened 'About' window")
+        }
+    }
+
+    internal func openScrobblingsCacheWindow() {
+        if scrobblingsWindow == nil {
+            scrobblingsWindow = self.storyboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "scrobbleList")) as? NSWindowController
+            scrobblingsWindow!.showWindow(self)
+            scrobblingsWindow!.window!.delegate = self
+            NSLog("Opened 'Scrobbling Cache' window")
+        }
+    }
+
+    // MARK: - Window delegate
+
+    func windowWillClose(_ notification: Notification) {
+        if let who = notification.object as? NSWindow {
+            if scrobblingsWindow != nil && who == scrobblingsWindow!.window! {
+                scrobblingsWindow = nil
+                NSLog("Closed 'Scrobbling Cache' window")
+            } else if aboutWindow != nil && who == aboutWindow!.window! {
+                aboutWindow = nil
+                NSLog("Closed 'About' window")
+            }
+        }
     }
 
     // MARK: - iTunes Service Delegate
@@ -223,7 +257,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, iTunesServiceDelegate {
         }
     }
 
-    func windowWillReturnUndoManager(window: NSWindow) -> UndoManager? {
+    func windowWillReturnUndoManager(_ window: NSWindow) -> UndoManager? {
         // Returns the NSUndoManager for the application. In this case, the manager returned is that of the managed object context for the application.
         return persistentContainer.viewContext.undoManager
     }
