@@ -9,6 +9,7 @@
 import Foundation
 import Zip
 
+/// Version struct for "x.x.x" strings.
 class Version {
     let major: Int
     let minor: Int
@@ -45,6 +46,7 @@ func <(a: Version, b: Version) -> Bool {
     }
 }
 
+/// Model of a release.
 class Release {
     let publishedAt: Date
     let description: String
@@ -69,6 +71,7 @@ class Release {
     }
 }
 
+/// Model of a download asset for a release.
 class ReleaseAsset {
     let name: String
     let url: URL
@@ -79,6 +82,7 @@ class ReleaseAsset {
     }
 }
 
+/// Updater that grabs the information from a GitHub repository and updates when needed.
 class GithubUpdater {
     private static let GRAPHQL_URL = URL(string: "https://api.github.com/graphql")!
     private let token: String
@@ -91,6 +95,7 @@ class GithubUpdater {
         self.appVersion = Version(Bundle.main.infoDictionary!["CFBundleShortVersionString"]! as! String)
     }
 
+    /// Starts the background task of checking for updates (once per hour).
     func start() {
         backgroundTask = DispatchWorkItem {
             NSLog("Checking for updates...")
@@ -103,11 +108,13 @@ class GithubUpdater {
         DispatchQueue.main.async(execute: backgroundTask!)
     }
 
+    /// Stops the background task from `start()`.
     func stop() {
         backgroundTask?.cancel()
         backgroundTask = nil
     }
 
+    /// Gets the information from GitHub. Does some interesting parsing stuff.
     private func getInfo() {
         var request = URLRequest(url: GithubUpdater.GRAPHQL_URL)
         request.httpMethod = "POST"
@@ -132,6 +139,7 @@ class GithubUpdater {
         }.resume()
     }
 
+    /// Does something with the result.
     private func doSomethingWithTheReleases(_ releases: [Release]) {
         if let release = releases.first {
             if !pendingToRestart && self.appVersion < release.tag {
@@ -146,6 +154,10 @@ class GithubUpdater {
                                                destination: appDir,
                                                overwrite: true,
                                                password: nil)
+                            let notif = NSUserNotification()
+                            notif.title = NSLocalizedString("UPDATE_INSTALLED_TITLE", comment: "Notification: Shows when an update has been applied")
+                            notif.informativeText = NSLocalizedString("UPDATE_INSTALLED_BODY", comment: "Notification: Shows when an update has been applied")
+                            NSUserNotificationCenter.default.deliver(notif)
                         }
                     }.resume()
                 }

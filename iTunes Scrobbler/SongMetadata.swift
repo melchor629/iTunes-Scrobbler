@@ -8,6 +8,9 @@
 
 import Cocoa
 
+/// Returns nil if the string is empty too.
+/// - Parameter a: The string to check.
+/// - Returns: nil if the string is nil or empty.
 internal func emptyIsNil(_ a: String?) -> String? {
     if a != nil && a!.isEmpty {
         return nil
@@ -16,10 +19,12 @@ internal func emptyIsNil(_ a: String?) -> String? {
     }
 }
 
+/// Returns the number or 0 if nil.
 internal func intOr0(_ a: Int?) -> Int {
     if let a = a { return a } else { return 0 }
 }
 
+/// Holds metadata from a song.
 struct SongMetadata {
     var trackTitle: String?
     var artistName: String?
@@ -29,16 +34,14 @@ struct SongMetadata {
 
     init() {}
 
+    /// Creates an instance from a NSManagedObject from a cached scrobble.
+    /// - Parameter managedObject: Cached scrobble.
     init(managedObject: NSManagedObject) {
         trackTitle = emptyIsNil(managedObject.value(forKey: "track") as? String)
         artistName = emptyIsNil(managedObject.value(forKey: "artist") as? String)
         albumArtistName = emptyIsNil(managedObject.value(forKey: "albumArtist") as? String)
         albumName = emptyIsNil(managedObject.value(forKey: "album") as? String)
         duration = (managedObject.value(forKey: "duration") as! NSNumber).doubleValue
-    }
-
-    static internal func non(_ a: Int?) -> Int {
-        if let a = a { return a } else { return 0 }
     }
 
     var hash: Int {

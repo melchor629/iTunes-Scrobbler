@@ -16,6 +16,10 @@ extension DispatchTimeInterval {
 }
 
 extension SongMetadata {
+    /**
+     Creates an instance of SongMetadata from an iTunesTrack.
+     - Parameter track: iTunes track that will be used to fill the new instance
+     */
     init(track: iTunesTrack) {
         trackTitle = emptyIsNil(track.name)
         artistName = emptyIsNil(track.artist)
@@ -25,6 +29,10 @@ extension SongMetadata {
     }
 }
 
+
+/**
+ Service implementation for iTunes player.
+ */
 class iTunesService: Service {
 
     private let iTunes = SBApplication(bundleIdentifier: "com.apple.iTunes")! as iTunesApplication

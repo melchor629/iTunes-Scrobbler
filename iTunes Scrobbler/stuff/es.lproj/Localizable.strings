@@ -24,3 +24,5 @@
 "CACHED_SCROBBLINGS"="Scrobblings en caché";
 "AUTO_UPDATE"="Auto actualizar app";
 "LOGGED_IN_TOOLTIP"="Abre tu perfil de Last.fm en el navegador";
+"UPDATE_INSTALLED_TITLE"="Nueva actualización disponible";
+"UPDATE_INSTALLED_BODY"="Para actualizar basta con cerrar y volver a abrir la aplicación";
