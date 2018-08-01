@@ -15,87 +15,31 @@ extension DispatchTimeInterval {
     }
 }
 
-enum iTunesState {
-    case inactive
-    case playing
-}
-
-struct SongMetadata {
-    var trackTitle: String?
-    var artistName: String?
-    var albumArtistName: String?
-    var albumName: String?
-    var duration = 0.0
-
-    init() {}
+extension SongMetadata {
     init(track: iTunesTrack) {
-        trackTitle = non(track.name)
-        artistName = non(track.artist)
-        albumArtistName = non(track.albumArtist)
-        albumName = non(track.album)
+        trackTitle = emptyIsNil(track.name)
+        artistName = emptyIsNil(track.artist)
+        albumArtistName = emptyIsNil(track.albumArtist)
+        albumName = emptyIsNil(track.album)
         duration = track.duration!
     }
-
-    init(managedObject: NSManagedObject) {
-        trackTitle = non(managedObject.value(forKey: "track") as? String)
-        artistName = non(managedObject.value(forKey: "artist") as? String)
-        albumArtistName = non(managedObject.value(forKey: "albumArtist") as? String)
-        albumName = non(managedObject.value(forKey: "album") as? String)
-        duration = (managedObject.value(forKey: "duration") as! NSNumber).doubleValue
-    }
-
-    private func non(_ a: String?) -> String? {
-        if a != nil && a!.isEmpty {
-            return nil
-        } else {
-            return a
-        }
-    }
-
-    private func non(_ a: Int?) -> Int {
-        if let a = a { return a } else { return 0 }
-    }
-
-    var hash: Int {
-        get {
-            return non(trackTitle?.hashValue) ^
-                (non(artistName?.hashValue) << 2) ^
-                (non(albumArtistName?.hashValue) << 4) ^
-                (non(albumName?.hashValue) << 6)
-        }
-    }
-
 }
 
-func ==(a: SongMetadata, b: SongMetadata) -> Bool {
-    return a.trackTitle == b.trackTitle && a.artistName == b.artistName && a.albumArtistName == b.albumArtistName && a.albumName == b.albumName
-}
-
-func !=(a: SongMetadata, b: SongMetadata) -> Bool {
-    return !(a == b)
-}
-
-protocol iTunesServiceDelegate {
-    func iTunesStateChanged(_ state: iTunesState)
-    func iTunesSongChanged(_ metadata: SongMetadata)
-    func iTunesScrobbleTime(_ metadata: SongMetadata, _ timestamp: Date)
-}
-
-class iTunesService: NSObject {
+class iTunesService: Service {
 
     private let iTunes = SBApplication(bundleIdentifier: "com.apple.iTunes")! as iTunesApplication
 
-    var delegate: iTunesServiceDelegate?
+    var delegate: ServiceDelegate?
 
-    private var state = iTunesState.inactive {
+    private var state = ServiceState.inactive {
         didSet {
-            delegate?.iTunesStateChanged(state)
+            delegate?.serviceStateChanged(state)
         }
     }
     private var metadata: SongMetadata = SongMetadata() {
         didSet {
             timeStartPlayingSong = Date()
-            delegate?.iTunesSongChanged(metadata)
+            delegate?.serviceSongChanged(metadata)
         }
     }
     private var timeStartPlayingSong: Date? = nil
@@ -170,7 +114,7 @@ class iTunesService: NSObject {
                 } else {
                     inside ? log("Scrobbling from inside!") : log("Scrobbling!")
                     scrobbled = true
-                    delegate?.iTunesScrobbleTime(metadata, timeStartPlayingSong!)
+                    delegate?.serviceScrobbleTime(metadata, timeStartPlayingSong!)
                 }
             }
         }

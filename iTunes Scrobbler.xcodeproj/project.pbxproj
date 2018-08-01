@@ -28,6 +28,8 @@
 		48BCA9902007967100E436DD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48BCA98F2007967100E436DD /* AppDelegate.swift */; };
 		48BCA9922007967100E436DD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 48BCA9912007967100E436DD /* Assets.xcassets */; };
 		48BCA99D200796DC00E436DD /* iTunes Scrobbler Launcher.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = 48BCA98D2007967100E436DD /* iTunes Scrobbler Launcher.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		48CE677D2111EFDE005B226E /* SongMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CE677C2111EFDE005B226E /* SongMetadata.swift */; };
+		48CE67852111F18C005B226E /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CE67842111F18C005B226E /* Service.swift */; };
 		48D6609D2095CB27004F0FD0 /* GithubUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D6609C2095CB27004F0FD0 /* GithubUpdater.swift */; };
 		48D660B02095DE02004F0FD0 /* Zip.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48D660AB2095DDDC004F0FD0 /* Zip.framework */; };
 		48F1E2D9200F48E8003AD00C /* Nothing.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 48F1E2D8200F48E8003AD00C /* Nothing.storyboard */; };
@@ -121,6 +123,8 @@
 		48BCA98F2007967100E436DD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		48BCA9912007967100E436DD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		48BCA9962007967100E436DD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		48CE677C2111EFDE005B226E /* SongMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongMetadata.swift; sourceTree = "<group>"; };
+		48CE67842111F18C005B226E /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		48D6609C2095CB27004F0FD0 /* GithubUpdater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubUpdater.swift; sourceTree = "<group>"; };
 		48D6609E2095DDDB004F0FD0 /* Zip.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Zip.xcodeproj; path = Zip/Zip.xcodeproj; sourceTree = "<group>"; };
 		48F105922003A0A80099BF23 /* iTunes_Scrobbler-BridgingHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iTunes_Scrobbler-BridgingHeader.h"; sourceTree = "<group>"; };
@@ -194,17 +198,18 @@
 		48277D2A20022953001F07E0 /* iTunes Scrobbler */ = {
 			isa = PBXGroup;
 			children = (
+				48F105922003A0A80099BF23 /* iTunes_Scrobbler-BridgingHeader.h */,
+				48CE67862111F2D3005B226E /* scriptingBridge */,
+				48CE67832111F176005B226E /* services */,
 				48109F10200640140098A0D8 /* views */,
 				480BB6492004E27D00A9C9CA /* stuff */,
 				48277D2B20022953001F07E0 /* AppDelegate.swift */,
 				48277D43200231E8001F07E0 /* MenuController.swift */,
-				48277D4520023999001F07E0 /* iTunesService.swift */,
-				48277D4720023C35001F07E0 /* iTunes.swift */,
 				48B1656A20028F9A00C54E15 /* Lastfm.swift */,
 				4871046020077F7E00974EA1 /* DatabaseFacade.swift */,
-				48F105922003A0A80099BF23 /* iTunes_Scrobbler-BridgingHeader.h */,
 				48D6609C2095CB27004F0FD0 /* GithubUpdater.swift */,
 				481CA84620BB01640042CE99 /* Tokens.swift */,
+				48CE677C2111EFDE005B226E /* SongMetadata.swift */,
 			);
 			path = "iTunes Scrobbler";
 			sourceTree = "<group>";
@@ -227,6 +232,23 @@
 				48F1E2D8200F48E8003AD00C /* Nothing.storyboard */,
 			);
 			path = "iTunes Scrobbler Launcher";
+			sourceTree = "<group>";
+		};
+		48CE67832111F176005B226E /* services */ = {
+			isa = PBXGroup;
+			children = (
+				48CE67842111F18C005B226E /* Service.swift */,
+				48277D4520023999001F07E0 /* iTunesService.swift */,
+			);
+			path = services;
+			sourceTree = "<group>";
+		};
+		48CE67862111F2D3005B226E /* scriptingBridge */ = {
+			isa = PBXGroup;
+			children = (
+				48277D4720023C35001F07E0 /* iTunes.swift */,
+			);
+			path = scriptingBridge;
 			sourceTree = "<group>";
 		};
 		48D6609F2095DDDB004F0FD0 /* Products */ = {
@@ -399,6 +421,7 @@
 			files = (
 				48277D44200231E8001F07E0 /* MenuController.swift in Sources */,
 				48277D4820023C35001F07E0 /* iTunes.swift in Sources */,
+				48CE67852111F18C005B226E /* Service.swift in Sources */,
 				483AE8BF2008BBD8008B038B /* AboutViewController.swift in Sources */,
 				48277D3120022953001F07E0 /* iTunes_Scrobbler.xcdatamodeld in Sources */,
 				4871046120077F7E00974EA1 /* DatabaseFacade.swift in Sources */,
@@ -410,6 +433,7 @@
 				48D6609D2095CB27004F0FD0 /* GithubUpdater.swift in Sources */,
 				48277D2C20022953001F07E0 /* AppDelegate.swift in Sources */,
 				481CA84720BB01640042CE99 /* Tokens.swift in Sources */,
+				48CE677D2111EFDE005B226E /* SongMetadata.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

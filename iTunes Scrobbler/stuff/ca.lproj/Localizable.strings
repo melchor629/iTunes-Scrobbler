@@ -23,3 +23,4 @@
 "ABOUT_HTML_TEXT"="<p><b>iTunes Scrobbler</b> es un projecte fet per {LINK1} per conseguir un millor scrobbler per iTunes en macOS 10.12 o superior.</p><p>El software està baix la licència {LINK2}.</p><br/><h3>Traductors</h3><p>{TRANSLATORS}</p><br/><h3>Agraïments</h3><p>{THANKS}</p>";
 "CACHED_SCROBBLINGS"="Scrobblings en caché";
 "AUTO_UPDATE"="Auto actualitzar app";
+"LOGGED_IN_TOOLTIP"="Obre el teu perfil de Last.fm en el navegador";

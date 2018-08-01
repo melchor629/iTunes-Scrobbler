@@ -19,7 +19,7 @@ internal func log(_ obj: Any) {
 }
 
 @NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate, iTunesServiceDelegate, NSWindowDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate, ServiceDelegate, NSWindowDelegate {
 
     internal static let addedScrobbling = NSNotification.Name(rawValue: "me.melchor9000.iTunes-Scrobbler.AppDelegate.addedScrobbling")
     internal static let sentScrobblings = NSNotification.Name(rawValue: "me.melchor9000.iTunes-Scrobbler.AppDelegate.sentScrobblings")
@@ -124,16 +124,16 @@ class AppDelegate: NSObject, NSApplicationDelegate, iTunesServiceDelegate, NSWin
         }
     }
 
-    // MARK: - iTunes Service Delegate
+    // MARK: - Service Delegate
 
-    func iTunesStateChanged(_ state: iTunesState) {
+    func serviceStateChanged(_ state: ServiceState) {
         log(state)
         if state == .inactive {
             menu.setInactiveState()
         }
     }
 
-    func iTunesSongChanged(_ metadata: SongMetadata) {
+    func serviceSongChanged(_ metadata: SongMetadata) {
         log(metadata)
         menu.setSongState(metadata, scrobbled: false)
         if menu.loggedIn && DBFacade.shared.sendScrobbles {
@@ -141,7 +141,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, iTunesServiceDelegate, NSWin
         }
     }
 
-    func iTunesScrobbleTime(_ metadata: SongMetadata, _ time: Date) {
+    func serviceScrobbleTime(_ metadata: SongMetadata, _ time: Date) {
         menu.setSongState(metadata, scrobbled: true)
 
         //Save always the scrobblings, just in case

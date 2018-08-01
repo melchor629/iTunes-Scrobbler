@@ -9,14 +9,50 @@
 import Cocoa
 import ServiceManagement
 
+fileprivate class MenuItemBuilder {
+    private let item: NSMenuItem
+
+    init(_ menu: NSMenu, _ key: String, comment: String) {
+        self.item = menu.addItem(
+            withTitle: NSLocalizedString(key, comment: comment),
+            action: nil,
+            keyEquivalent: ""
+        )
+    }
+
+    @discardableResult
+    func setTag(_ tag: Int) -> MenuItemBuilder {
+        item.tag = tag
+        return self
+    }
+
+    @discardableResult
+    func setAction(_ selector: Selector, target: AnyObject) -> MenuItemBuilder {
+        item.action = selector
+        item.target = target
+        return self
+    }
+
+    @discardableResult
+    func setTooltip(_ key: String, comment: String) -> MenuItemBuilder {
+        item.toolTip = NSLocalizedString(key, comment: comment)
+        return self
+    }
+}
+
 class MenuController: NSObject {
 
     private let statusBarInactiveIcon = NSImage.Name(rawValue: "StatusBarInactiveTemplate")
     private let statusBarActiveNotScrobbledIcon = NSImage.Name(rawValue: "StatusBarActiveNotScrobbledTemplate")
     private let statusBarActiveScrobbledIcon = NSImage.Name(rawValue: "StatusBarActiveScrobbledTemplate")
+    private let inactiveTag = 1
+    private let scrobbledTag = 2
+    private let loggedInTag = 3
+    private let cacheTag = 4
 
     private var statusItem: NSStatusItem?
     private var cachedScrobblings: Int = 0
+    private var username: String?
 
     internal var loggedIn = false
     internal var loggingIn = false
@@ -31,89 +67,46 @@ class MenuController: NSObject {
 
     private func createMenu() {
         let statusMenu = NSMenu(title: "iTunes Scrobbler")
-        statusMenu.addItem(
-            withTitle: NSLocalizedString("STATE_INACTIVE", comment: "Menu: Status when iTunes is closed or stopped"),
-            action: nil,
-            keyEquivalent: ""
-        ).tag = 1
-        statusMenu.addItem(
-            withTitle: NSLocalizedString("SCROBBLED", comment: "Menu: When the song is scrobbled, this text is visible"),
-            action: nil,
-            keyEquivalent: ""
-        ).tag = 2
+        MenuItemBuilder(statusMenu, "STATE_INACTIVE", comment: "Menu: Status when iTunes is closed or stopped")
+            .setTag(inactiveTag)
+        MenuItemBuilder(statusMenu, "SCROBBLED", comment: "Menu: When the song is scrobbled, this text is visible")
+            .setTag(scrobbledTag)
         statusMenu.addItem(NSMenuItem.separator())
 
-        statusMenu.addItem(
-            withTitle: NSLocalizedString("LOGGED_IN", comment: "Menu: When logged in"),
-            action: nil,
-            keyEquivalent: ""
-        ).tag = 3
-        statusMenu.addItem(
-            withTitle: NSLocalizedString("END_LOG_IN", comment: "Menu: To end the authentication process"),
-            action: #selector(MenuController.endLogIn),
-            keyEquivalent: ""
-        ).target = self
-        statusMenu.addItem(
-            withTitle: NSLocalizedString("CANCEL_LOG_IN", comment: "Menu: To end the authentication process by cancelling"),
-            action: #selector(MenuController.cancelLogIn),
-            keyEquivalent: ""
-        ).target = self
-        statusMenu.addItem(
-            withTitle: NSLocalizedString("NOT_LOGGED_IN", comment: "Menu: Log in"),
-            action: #selector(MenuController.logIn),
-            keyEquivalent: ""
-        ).target = self
-        statusMenu.addItem(
-            withTitle: NSLocalizedString("LOG_OUT", comment: "Menu: Log out"),
-            action: #selector(MenuController.logOut),
-            keyEquivalent: ""
-        ).target = self
+        MenuItemBuilder(statusMenu, "LOGGED_IN", comment: "Menu: When logged in")
+            .setTag(loggedInTag)
+            .setAction(#selector(MenuController.openUserProfile), target: self)
+            .setTooltip("LOGGED_IN_TOOLTIP", comment: "Menu tooltip: Shows that when clicked, will open his Last.FM profile")
+        MenuItemBuilder(statusMenu, "END_LOG_IN", comment: "Menu: To end the authentication process")
+            .setAction(#selector(MenuController.endLogIn), target: self)
+        MenuItemBuilder(statusMenu, "CANCEL_LOG_IN", comment: "Menu: To end the authentication process by cancelling")
+            .setAction(#selector(MenuController.cancelLogIn), target: self)
+        MenuItemBuilder(statusMenu, "NOT_LOGGED_IN", comment: "Menu: Log in")
+            .setAction(#selector(MenuController.logIn), target: self)
+        MenuItemBuilder(statusMenu, "LOG_OUT", comment: "Menu: Log out")
+            .setAction(#selector(MenuController.logOut), target: self)
         statusMenu.addItem(NSMenuItem.separator())
 
-        statusMenu.addItem(
-            withTitle: NSLocalizedString("IN_CACHE", comment: "Menu: Scrobblings to be scrobbled"),
-            action: nil,
-            keyEquivalent: ""
-        ).tag = 5
-        statusMenu.addItem(
-            withTitle: NSLocalizedString("SCROBBLE_NOW", comment: "Menu: Scrobble now"),
-            action: #selector(MenuController.scrobbleNow),
-            keyEquivalent: ""
-        ).target = self
-        statusMenu.addItem(
-            withTitle: NSLocalizedString("SEE_SCROBBLINGS", comment: "Menu: Show cached scrobblings"),
-            action: #selector(MenuController.showCachedScrobblings),
-            keyEquivalent: ""
-        ).target = self
+        MenuItemBuilder(statusMenu, "IN_CACHE", comment: "Menu: Scrobblings to be scrobbled")
+            .setTag(cacheTag)
+        MenuItemBuilder(statusMenu, "SCROBBLE_NOW", comment: "Menu: Scrobble now button")
+            .setAction(#selector(MenuController.scrobbleNow), target: self)
+        MenuItemBuilder(statusMenu, "SEE_SCROBBLINGS", comment: "Menu: Show cached scrobblings")
+            .setAction(#selector(MenuController.showCachedScrobblings), target: self)
         statusMenu.addItem(NSMenuItem.separator())
 
-        statusMenu.addItem(
-            withTitle: NSLocalizedString("SEND_SCROBBLE_STATUS", comment: "Menu: Enables/Disables scrobblings sending"),
-            action: #selector(MenuController.changeSendScrobbleStatus),
-            keyEquivalent: ""
-        ).target = self
-        statusMenu.addItem(
-            withTitle: NSLocalizedString("RUN_AT_LOGIN", comment: "Menu: Run at login"),
-            action: #selector(MenuController.changeRunAtLogin),
-            keyEquivalent: ""
-        ).target = self
-        statusMenu.addItem(
-            withTitle: NSLocalizedString("AUTO_UPDATE", comment: "Menu: Auto update"),
-            action: #selector(MenuController.changeAutoUpdate),
-            keyEquivalent: ""
-            ).target = self
+        MenuItemBuilder(statusMenu, "SEND_SCROBBLE_STATUS", comment: "Menu: Enables/Disables scrobblings sending (toggle)")
+            .setAction(#selector(MenuController.changeSendScrobbleStatus), target: self)
+        MenuItemBuilder(statusMenu, "RUN_AT_LOGIN", comment: "Menu: Run at login toggle")
+            .setAction(#selector(MenuController.changeRunAtLogin), target: self)
+        MenuItemBuilder(statusMenu, "AUTO_UPDATE", comment: "Menu: Auto update toggle")
+            .setAction(#selector(MenuController.changeAutoUpdate), target: self)
         statusMenu.addItem(NSMenuItem.separator())
 
-        statusMenu.addItem(
-            withTitle: NSLocalizedString("ABOUT", comment: "Menu: About window opener"),
-            action: #selector(MenuController.openAboutWindow),
-            keyEquivalent: ""
-        ).target = self
-        statusMenu.addItem(
-            withTitle: NSLocalizedString("QUIT", comment: "Menu: Close the app"),
-            action: #selector(MenuController.quit),
-            keyEquivalent: ""
-        ).target = self
+        MenuItemBuilder(statusMenu, "ABOUT", comment: "Menu: About window opener")
+            .setAction(#selector(MenuController.openAboutWindow), target: self)
+        MenuItemBuilder(statusMenu, "QUIT", comment: "Menu: Close the app")
+            .setAction(#selector(MenuController.quit), target: self)
 
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
         statusItem!.image = NSImage(named: statusBarInactiveIcon)
@@ -233,31 +226,38 @@ class MenuController: NSObject {
         }
     }
 
+    @objc func openUserProfile() {
+        if let username = self.username {
+            NSWorkspace.shared.open(URL(string: "https://www.last.fm/user/\(username)")!)
+        }
+    }
+
     internal func setSongState(_ metadata: SongMetadata, scrobbled: Bool) {
         var text = metadata.trackTitle!
         if let artist = metadata.artistName {
             text += " - " + artist
         }
-        statusItem?.menu!.item(withTag: 1)!.title = text
-        statusItem?.menu!.item(withTag: 2)!.isHidden = !scrobbled
+        statusItem?.menu!.item(withTag: inactiveTag)!.title = text
+        statusItem?.menu!.item(withTag: scrobbledTag)!.isHidden = !scrobbled
         statusItem?.image = NSImage(named: scrobbled ? statusBarActiveScrobbledIcon : statusBarActiveNotScrobbledIcon)
     }
 
     internal func setInactiveState() {
-        statusItem?.menu!.item(withTag: 1)!.title = NSLocalizedString("STATE_INACTIVE", comment: "Menu: iTunes is inactive")
-        statusItem?.menu!.item(withTag: 2)!.isHidden = true
+        statusItem?.menu!.item(withTag: inactiveTag)!.title = NSLocalizedString("STATE_INACTIVE", comment: "Menu: iTunes is inactive")
+        statusItem?.menu!.item(withTag: scrobbledTag)!.isHidden = true
         statusItem?.image = NSImage(named: statusBarInactiveIcon)
     }
 
     internal func setLoggedOutState() {
         loggedIn = false
-        statusItem?.menu!.item(withTag: 3)!.isHidden = true
+        statusItem?.menu!.item(withTag: loggedInTag)!.isHidden = true
     }
 
     internal func setLoggedInState(_ username: String) {
+        self.username = username
         loggedIn = true
-        statusItem?.menu!.item(withTag: 3)!.isHidden = false
-        statusItem?.menu!.item(withTag: 3)!.title = NSLocalizedString("LOGGED_IN", comment: "") + username
+        statusItem?.menu!.item(withTag: loggedInTag)!.isHidden = false
+        statusItem?.menu!.item(withTag: loggedInTag)!.title = NSLocalizedString("LOGGED_IN", comment: "") + username
     }
 
     internal func showIfNeeded() {
@@ -268,7 +268,7 @@ class MenuController: NSObject {
 
     internal func updateScrobbleCacheCount(_ count: Int) {
         cachedScrobblings = count
-        statusItem?.menu!.item(withTag: 5)!.title = NSLocalizedString("IN_CACHE", comment: "Menu: Scrobblings to be scrobbled") + String(count)
+        statusItem?.menu!.item(withTag: cacheTag)!.title = NSLocalizedString("IN_CACHE", comment: "Menu: Scrobblings to be scrobbled") + String(count)
     }
 
 }
