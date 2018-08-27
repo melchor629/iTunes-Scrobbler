@@ -17,8 +17,10 @@ protocol ServiceDelegate {
      Notifies when the service detects the state of the player has changed.
 
      - Parameter state: The new state of the player.
+     - Parameter metadata: If state is not inactive, will pass the metadata
+     - Parameter scrobbled: If state is not active, will pass if scrobbled
      */
-    func serviceStateChanged(_ state: ServiceState)
+    func serviceStateChanged(_ state: ServiceState, _ metadata: SongMetadata?, _ scrobbled: Bool)
 
     /**
      Notifies when the service detects a song has changed.
@@ -44,6 +46,7 @@ protocol ServiceDelegate {
 enum ServiceState {
     case inactive
     case playing
+    case paused
 }
 
 /**

@@ -232,11 +232,18 @@ class MenuController: NSObject {
         }
     }
 
-    internal func setSongState(_ metadata: SongMetadata, scrobbled: Bool) {
+    internal func setSongState(_ metadata: SongMetadata, scrobbled: Bool, paused: Bool = false) {
         var text = metadata.trackTitle!
         if let artist = metadata.artistName {
             text += " - " + artist
         }
+
+        if paused {
+            text = "❚❚ \(text)"
+        } else {
+            text = "► \(text)"
+        }
+
         statusItem?.menu!.item(withTag: inactiveTag)!.title = text
         statusItem?.menu!.item(withTag: scrobbledTag)!.isHidden = !scrobbled
         statusItem?.image = NSImage(named: scrobbled ? statusBarActiveScrobbledIcon : statusBarActiveNotScrobbledIcon)

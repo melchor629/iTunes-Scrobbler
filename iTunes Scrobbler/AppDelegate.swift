@@ -126,15 +126,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, ServiceDelegate, NSWindowDel
 
     // MARK: - Service Delegate
 
-    func serviceStateChanged(_ state: ServiceState) {
-        log(state)
+    func serviceStateChanged(_ state: ServiceState, _ metadata: SongMetadata?, _ scrobbled: Bool) {
         if state == .inactive {
             menu.setInactiveState()
+        } else if state == .playing {
+            menu.setSongState(metadata!, scrobbled: scrobbled)
+        } else if state == .paused {
+            menu.setSongState(metadata!, scrobbled: scrobbled, paused: true)
         }
     }
 
     func serviceSongChanged(_ metadata: SongMetadata) {
-        log(metadata)
         menu.setSongState(metadata, scrobbled: false)
         if menu.loggedIn && DBFacade.shared.sendScrobbles {
             lastfm.updateNowPlaying(metadata) { (corrections, statusCode) in }

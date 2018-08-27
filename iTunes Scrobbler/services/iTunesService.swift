@@ -41,12 +41,14 @@ class iTunesService: Service {
 
     private var state = ServiceState.inactive {
         didSet {
-            delegate?.serviceStateChanged(state)
+            log("Player State is now: \(state)")
+            delegate?.serviceStateChanged(state, state == .inactive ? nil : self.metadata, scrobbled)
         }
     }
     private var metadata: SongMetadata = SongMetadata() {
         didSet {
             timeStartPlayingSong = Date()
+            log("Player metadata is now: \(metadata) [\(timeStartPlayingSong)]")
             delegate?.serviceSongChanged(metadata)
         }
     }
@@ -61,28 +63,16 @@ class iTunesService: Service {
             object: nil
         )
 
-        if isRunning {
-            if iTunes.playerState != .stopped {
-                state = .playing
-                checkSongChanges()
-            } else {
-                state = .inactive
-            }
-        } else {
-            state = .inactive
-        }
-
         checkForStatus()
     }
 
     @objc func playerStateChanged(_ notification: Notification) {
         let playerState = notification.userInfo!["Player State"] as! String
-        if playerState == "Stopped" || playerState == "Paused" {
-            if playerState == "Stopped" {
-                state = .inactive
-            } else {
-                state = .playing
-            }
+        log("iTunes status changed received: \(playerState)")
+        if playerState == "Stopped" {
+            state = .inactive
+        } else if playerState == "Paused" {
+            state = .paused
         } else if playerState == "Playing" {
             checkSongChanges()
             state = .playing
@@ -129,12 +119,15 @@ class iTunesService: Service {
     }
 
     private func checkForStatus() {
+        if self.state != .inactive && (!self.isRunning || self.iTunes.playerState == .stopped) {
+            self.state = .inactive
+        } else if self.state != .paused && self.isRunning && self.iTunes.playerState != .stopped && self.iTunes.playerState != .playing {
+            self.state = .paused
+        } else if self.state != .playing && self.isRunning && self.iTunes.playerState == .playing {
+            self.checkSongChanges()
+            self.state = .playing
+        }
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + DispatchTimeInterval.seconds(10)) {
-            if self.state != .inactive && (!self.isRunning || self.iTunes.playerState != .playing) {
-                self.state = .inactive
-            } else if self.state != .playing && self.isRunning && self.iTunes.playerState == .playing {
-                self.state = .playing
-            }
             self.checkForStatus()
         }
     }
