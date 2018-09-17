@@ -48,7 +48,7 @@ class iTunesService: Service {
     private var metadata: SongMetadata = SongMetadata() {
         didSet {
             timeStartPlayingSong = Date()
-            log("Player metadata is now: \(metadata) [\(timeStartPlayingSong)]")
+            log("Player metadata is now: \(metadata) [\(timeStartPlayingSong!)]")
             delegate?.serviceSongChanged(metadata)
         }
     }

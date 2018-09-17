@@ -113,6 +113,8 @@ class MenuController: NSObject {
         statusItem!.menu = statusMenu
         statusItem!.highlightMode = true
 
+        statusItem!.menu!.item(withTag: scrobbledTag)!.isHidden = true;
+
         DispatchQueue.main.async {
             self.mustScrobble = DBFacade.shared.sendScrobbles
             self.openAtLogin = DBFacade.shared.openAtLogin
