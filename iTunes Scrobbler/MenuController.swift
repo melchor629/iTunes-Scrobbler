@@ -42,9 +42,9 @@ fileprivate class MenuItemBuilder {
 
 class MenuController: NSObject {
 
-    private let statusBarInactiveIcon = NSImage.Name(rawValue: "StatusBarInactiveTemplate")
-    private let statusBarActiveNotScrobbledIcon = NSImage.Name(rawValue: "StatusBarActiveNotScrobbledTemplate")
-    private let statusBarActiveScrobbledIcon = NSImage.Name(rawValue: "StatusBarActiveScrobbledTemplate")
+    private let statusBarInactiveIcon = "StatusBarInactiveTemplate"
+    private let statusBarActiveNotScrobbledIcon = "StatusBarActiveNotScrobbledTemplate"
+    private let statusBarActiveScrobbledIcon = "StatusBarActiveScrobbledTemplate"
     private let inactiveTag = 1
     private let scrobbledTag = 2
     private let loggedInTag = 3
@@ -121,7 +121,7 @@ class MenuController: NSObject {
         }
     }
 
-    override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
+    func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
         if menuItem.action == #selector(MenuController.changeRunAtLogin) {
             menuItem.state = openAtLogin ? .on : .off
         } else if menuItem.action == #selector(MenuController.logOut) {

@@ -34,7 +34,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, ServiceDelegate, NSWindowDel
     internal var scrobblingsWindow: NSWindowController?
 
     override init() {
-        self.storyboard = NSStoryboard(name: NSStoryboard.Name(rawValue: "Main"), bundle: nil)
+        self.storyboard = NSStoryboard(name: "Main", bundle: nil)
         self.lastfm = Lastfm()
         self.updater = GithubUpdater()
         super.init()
@@ -94,7 +94,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, ServiceDelegate, NSWindowDel
 
     internal func openAboutWindow() {
         if aboutWindow == nil {
-            aboutWindow = self.storyboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "about")) as? NSWindowController
+            aboutWindow = self.storyboard.instantiateController(withIdentifier: "about") as? NSWindowController
             aboutWindow!.showWindow(self)
             aboutWindow!.window!.delegate = self
             NSLog("Opened 'About' window")
@@ -103,7 +103,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, ServiceDelegate, NSWindowDel
 
     internal func openScrobblingsCacheWindow() {
         if scrobblingsWindow == nil {
-            scrobblingsWindow = self.storyboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "scrobbleList")) as? NSWindowController
+            scrobblingsWindow = self.storyboard.instantiateController(withIdentifier: "scrobbleList") as? NSWindowController
             scrobblingsWindow!.showWindow(self)
             scrobblingsWindow!.window!.delegate = self
             NSLog("Opened 'Scrobbling Cache' window")
