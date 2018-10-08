@@ -26,3 +26,5 @@
 "LOGGED_IN_TOOLTIP"="Obre el teu perfil de Last.fm en el navegador";
 "UPDATE_INSTALLED_TITLE"="Nova actualització disponible";
 "UPDATE_INSTALLED_BODY"="Per actualitzar-la tan sols has de reiniciar la app i disfrutaràs d'una nova versió";
+"REQUEST_PERMISSION_TITLE"="Permis del scrobbler per a accedir al estat de %@";
+"REQUEST_PERMISSION_DENIED"="Necesitamem accès a l'estat de l'aplicació %@ per a que funcioni correctament.\nPer aconseguir-ho, obri Preferencias del Sistema > Seguridad y privacidad > Privacidad > Automatización, i permiteix a iTunes Scrobbler accedir a %@";

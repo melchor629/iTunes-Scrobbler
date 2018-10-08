@@ -110,6 +110,36 @@ class AppDelegate: NSObject, NSApplicationDelegate, ServiceDelegate, NSWindowDel
         }
     }
 
+    internal func permissionCheckFailed(_ service: Service, _ what: ServicePermissionStatus) {
+        let name = service.name
+        let title = NSString(format: NSLocalizedString("REQUEST_PERMISSION_TITLE", comment: "Request permission: Title") as NSString, name) as String
+        switch what {
+        case .Denied:
+            let alert = NSAlert()
+            alert.informativeText = NSString(format: NSLocalizedString("REQUEST_PERMISSION_DENIED", comment: "Request permission: Permission denied") as NSString, name, name) as String
+            alert.messageText = title
+            alert.alertStyle = .critical
+            alert.addButton(withTitle: "IS ALLOWED") //1000
+            alert.addButton(withTitle: "QUIT APP")   //1001
+            let res = alert.runModal()
+
+            if res.rawValue == 1001 {
+                exit(1)
+            } else if res.rawValue == 1000 {
+                // https://stackoverflow.com/questions/29847611/restarting-osx-app-programmatically
+                let url = URL(fileURLWithPath: Bundle.main.resourcePath!)
+                let path = url.deletingLastPathComponent().deletingLastPathComponent().absoluteString
+                let task = Process()
+                task.launchPath = "/usr/bin/open"
+                task.arguments = [ path ]
+                task.launch()
+                exit(0)
+            }
+
+        default: break
+        }
+    }
+
     // MARK: - Window delegate
 
     func windowWillClose(_ notification: Notification) {
@@ -130,9 +160,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, ServiceDelegate, NSWindowDel
         if state == .inactive {
             menu.setInactiveState()
         } else if state == .playing {
-            menu.setSongState(metadata!, scrobbled: scrobbled)
+            if let metadata = metadata {
+                menu.setSongState(metadata, scrobbled: scrobbled)
+            }
         } else if state == .paused {
-            menu.setSongState(metadata!, scrobbled: scrobbled, paused: true)
+            if let metadata = metadata {
+                menu.setSongState(metadata, scrobbled: scrobbled, paused: true)
+            }
         }
     }
 

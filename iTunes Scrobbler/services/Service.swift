@@ -38,6 +38,15 @@ protocol ServiceDelegate {
         - timestamp: The clock time when the song started to play.
      */
     func serviceScrobbleTime(_ metadata: SongMetadata, _ timestamp: Date)
+
+    /**
+     Notifies when the app has no access to the player through AppleScript.
+
+     - Parameters:
+        - service: A reference to the service that originated the lack of permissions.
+        - status: Status of the permission that has the app to the player
+     */
+    func permissionCheckFailed(_ service: Service, _ status: ServicePermissionStatus)
 }
 
 /**
@@ -47,6 +56,12 @@ enum ServiceState {
     case inactive
     case playing
     case paused
+}
+
+enum ServicePermissionStatus {
+    case AppNotRunning
+    case Denied
+    case UserRequested
 }
 
 /**
@@ -59,6 +74,11 @@ protocol Service {
      start listening as the app has not been initialized yet.
      */
     func start()
+
+    /**
+     Name of the player
+     */
+    var name: String { get }
 
     /**
      The target of the notifications.

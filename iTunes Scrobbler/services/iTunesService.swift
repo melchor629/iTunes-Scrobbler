@@ -17,15 +17,15 @@ extension DispatchTimeInterval {
 
 extension SongMetadata {
     /**
-     Creates an instance of SongMetadata from an iTunesTrack.
+     Creates an instance of SongMetadata from an iTunes Track.
      - Parameter track: iTunes track that will be used to fill the new instance
      */
-    init(track: iTunesTrack) {
-        trackTitle = emptyIsNil(track.name)
-        artistName = emptyIsNil(track.artist)
-        albumArtistName = emptyIsNil(track.albumArtist)
-        albumName = emptyIsNil(track.album)
-        duration = track.duration!
+    init(_ info: [String: Any]) {
+        trackTitle = info["name"] as! String?
+        artistName = info["artist"] as! String?
+        albumArtistName = info["albumArtist"] as! String?
+        albumName = info["album"] as! String?
+        duration = info["duration"] as! Double
     }
 }
 
@@ -35,7 +35,58 @@ extension SongMetadata {
  */
 class iTunesService: Service {
 
-    private let iTunes = SBApplication(bundleIdentifier: "com.apple.iTunes")! as iTunesApplication
+    private let getCurrentTrackScript = AppleScript("""
+on getOrNull(value)
+    if value is "" then
+        return "null"
+    else
+        return value
+    end if
+end getOrNull
+
+on replaceText(find, replace, subject)
+    set prevTIDs to text item delimiters of AppleScript
+    set text item delimiters of AppleScript to find
+    set subject to text items of subject
+
+    set text item delimiters of AppleScript to replace
+    set subject to subject as text
+    set text item delimiters of AppleScript to prevTIDs
+
+    return subject
+end replaceText
+
+tell application "iTunes"
+    set t to current track
+    "name: " & my getOrNull(name of t) & "
+artist: " & my getOrNull(artist of t) & "
+album: " & my getOrNull(album of t) & "
+duration: " & my replaceText(",", ".", duration of t as text) & "
+albumArtist: " & my getOrNull(album artist of t)
+end tell
+""")
+    private let getPlayerPositionScript = AppleScript("""
+on replaceText(find, replace, subject)
+    set prevTIDs to text item delimiters of AppleScript
+    set text item delimiters of AppleScript to find
+    set subject to text items of subject
+
+    set text item delimiters of AppleScript to replace
+    set subject to subject as text
+    set text item delimiters of AppleScript to prevTIDs
+
+    return subject
+end replaceText
+
+tell application "iTunes"
+    "position: " & my replaceText(",", ".", player position as text)
+end tell
+""")
+    private let getPlayerStateScript = AppleScript("""
+tell application "iTunes"
+    "state: " & player state
+end tell
+""")
 
     var delegate: ServiceDelegate?
 
@@ -54,6 +105,10 @@ class iTunesService: Service {
     }
     private var timeStartPlayingSong: Date? = nil
     private var scrobbled = false
+
+    var name: String {
+        get { return "iTunes" }
+    }
 
     func start() {
         DistributedNotificationCenter.default().addObserver(
@@ -79,8 +134,29 @@ class iTunesService: Service {
         }
     }
 
+    private func checkAppleScriptPermission() {
+        if #available(macOS 10.14, *) {
+            //See https://www.felix-schwarz.org/blog/2018/08/new-apple-event-apis-in-macos-mojave
+            let desc = NSAppleEventDescriptor(bundleIdentifier: "com.apple.iTunes").aeDesc!
+            let status = AEDeterminePermissionToAutomateTarget(desc, 0x61657674, typeWildCard, true)
+
+            if status == -1743 {
+                //User has declined the permission
+                delegate?.permissionCheckFailed(self, .Denied)
+            } else if status == -1744 {
+                //User has to be requested for permission
+                delegate?.permissionCheckFailed(self, .UserRequested)
+            } else if status == -600 {
+                //App is not running
+                delegate?.permissionCheckFailed(self, .AppNotRunning)
+            }
+        }
+    }
+
     private func checkSongChanges() {
-        let currentSong = SongMetadata(track: iTunes.currentTrack!)
+        checkAppleScriptPermission()
+        let currentSong = SongMetadata(getCurrentTrackScript.run())
+
         if currentSong != self.metadata {
             self.metadata = currentSong
             self.scrobbled = false
@@ -96,12 +172,18 @@ class iTunesService: Service {
         }
     }
 
+    private var playerState: String {
+        get {
+            return getPlayerStateScript.run()["state"] as! String
+        }
+    }
+
     private func checkForScrobbling(inside: Bool = false) {
         if !self.isRunning {
             state = .inactive
         } else {
             if !scrobbled {
-                let position = iTunes.playerPosition!
+                let position = getPlayerPositionScript.run()["position"] as! Double
                 let scrobbleTime = min(metadata.duration / 2, 4 * 60)
                 if position < scrobbleTime {
                     let timeToHalf = Int((scrobbleTime - position) * 1000)
@@ -119,11 +201,13 @@ class iTunesService: Service {
     }
 
     private func checkForStatus() {
-        if self.state != .inactive && (!self.isRunning || self.iTunes.playerState == .stopped) {
+        checkAppleScriptPermission()
+        if self.state != .inactive && (!self.isRunning || playerState == "stopped") {
             self.state = .inactive
-        } else if self.state != .paused && self.isRunning && self.iTunes.playerState != .stopped && self.iTunes.playerState != .playing {
+        } else if self.state != .paused && self.isRunning && playerState != "stopped" && playerState != "playing" {
+            self.checkSongChanges()
             self.state = .paused
-        } else if self.state != .playing && self.isRunning && self.iTunes.playerState == .playing {
+        } else if self.state != .playing && self.isRunning && playerState == "playing" {
             self.checkSongChanges()
             self.state = .playing
         }

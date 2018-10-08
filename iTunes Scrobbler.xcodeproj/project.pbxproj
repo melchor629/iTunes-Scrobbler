@@ -15,13 +15,13 @@
 		48277D4020022977001F07E0 /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48277D3F20022976001F07E0 /* ScriptingBridge.framework */; };
 		48277D44200231E8001F07E0 /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48277D43200231E8001F07E0 /* MenuController.swift */; };
 		48277D4620023999001F07E0 /* iTunesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48277D4520023999001F07E0 /* iTunesService.swift */; };
-		48277D4820023C35001F07E0 /* iTunes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48277D4720023C35001F07E0 /* iTunes.swift */; };
 		48277D4E200259F1001F07E0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 48277D4D200259F1001F07E0 /* Main.storyboard */; };
 		483AE8BF2008BBD8008B038B /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483AE8BE2008BBD8008B038B /* AboutViewController.swift */; };
 		4871045F2007676200974EA1 /* VibrantDarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4871045E2007676200974EA1 /* VibrantDarkView.swift */; };
 		4871046120077F7E00974EA1 /* DatabaseFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4871046020077F7E00974EA1 /* DatabaseFacade.swift */; };
 		4871046320078E1700974EA1 /* WindowInFront.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4871046220078E1700974EA1 /* WindowInFront.swift */; };
 		4871B73E20EA322E00EB6032 /* Zip.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 48D660AB2095DDDC004F0FD0 /* Zip.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4893B6E4216BCB660095A6F4 /* AppleScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4893B6E3216BCB660095A6F4 /* AppleScript.swift */; };
 		48B165652002673400C54E15 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 48B165672002673400C54E15 /* Localizable.strings */; };
 		48B1656B20028F9A00C54E15 /* Lastfm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B1656A20028F9A00C54E15 /* Lastfm.swift */; };
 		48BCA9882007953A00E436DD /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48BCA9872007953A00E436DD /* ServiceManagement.framework */; };
@@ -108,12 +108,12 @@
 		48277D3F20022976001F07E0 /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
 		48277D43200231E8001F07E0 /* MenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
 		48277D4520023999001F07E0 /* iTunesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iTunesService.swift; sourceTree = "<group>"; };
-		48277D4720023C35001F07E0 /* iTunes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iTunes.swift; sourceTree = "<group>"; };
 		48277D4D200259F1001F07E0 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		483AE8BE2008BBD8008B038B /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		4871045E2007676200974EA1 /* VibrantDarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VibrantDarkView.swift; sourceTree = "<group>"; };
 		4871046020077F7E00974EA1 /* DatabaseFacade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseFacade.swift; sourceTree = "<group>"; };
 		4871046220078E1700974EA1 /* WindowInFront.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowInFront.swift; sourceTree = "<group>"; };
+		4893B6E3216BCB660095A6F4 /* AppleScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleScript.swift; sourceTree = "<group>"; };
 		48B165662002673400C54E15 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		48B165682002688D00C54E15 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		48B165692002689500C54E15 /* ca */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ca; path = ca.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -199,7 +199,6 @@
 			isa = PBXGroup;
 			children = (
 				48F105922003A0A80099BF23 /* iTunes_Scrobbler-BridgingHeader.h */,
-				48CE67862111F2D3005B226E /* scriptingBridge */,
 				48CE67832111F176005B226E /* services */,
 				48109F10200640140098A0D8 /* views */,
 				480BB6492004E27D00A9C9CA /* stuff */,
@@ -210,6 +209,7 @@
 				48D6609C2095CB27004F0FD0 /* GithubUpdater.swift */,
 				481CA84620BB01640042CE99 /* Tokens.swift */,
 				48CE677C2111EFDE005B226E /* SongMetadata.swift */,
+				4893B6E3216BCB660095A6F4 /* AppleScript.swift */,
 			);
 			path = "iTunes Scrobbler";
 			sourceTree = "<group>";
@@ -241,14 +241,6 @@
 				48277D4520023999001F07E0 /* iTunesService.swift */,
 			);
 			path = services;
-			sourceTree = "<group>";
-		};
-		48CE67862111F2D3005B226E /* scriptingBridge */ = {
-			isa = PBXGroup;
-			children = (
-				48277D4720023C35001F07E0 /* iTunes.swift */,
-			);
-			path = scriptingBridge;
 			sourceTree = "<group>";
 		};
 		48D6609F2095DDDB004F0FD0 /* Products */ = {
@@ -420,8 +412,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				48277D44200231E8001F07E0 /* MenuController.swift in Sources */,
-				48277D4820023C35001F07E0 /* iTunes.swift in Sources */,
 				48CE67852111F18C005B226E /* Service.swift in Sources */,
+				4893B6E4216BCB660095A6F4 /* AppleScript.swift in Sources */,
 				483AE8BF2008BBD8008B038B /* AboutViewController.swift in Sources */,
 				48277D3120022953001F07E0 /* iTunes_Scrobbler.xcdatamodeld in Sources */,
 				4871046120077F7E00974EA1 /* DatabaseFacade.swift in Sources */,

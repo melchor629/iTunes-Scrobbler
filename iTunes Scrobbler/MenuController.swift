@@ -235,7 +235,7 @@ class MenuController: NSObject {
     }
 
     internal func setSongState(_ metadata: SongMetadata, scrobbled: Bool, paused: Bool = false) {
-        var text = metadata.trackTitle!
+        var text = metadata.trackTitle != nil ? metadata.trackTitle! : "?"
         if let artist = metadata.artistName {
             text += " - " + artist
         }
