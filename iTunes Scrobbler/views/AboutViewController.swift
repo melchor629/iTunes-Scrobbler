@@ -36,6 +36,10 @@ class AboutViewController: NSViewController {
             .replacingOccurrences(of: "{THANKS}", with: thanksHtml)
             .replacingOccurrences(of: "{LINK1}", with: "<a href=\"https://github.com/melchor629\">@melchor629</a>")
             .replacingOccurrences(of: "{LINK2}", with: "<a href=\"https://github.com/melchor629/iTunes-Scrobbler/blob/master/LICENSE\">GPL-3.0</a>")
+        var showColorCss = false;
+        if #available(macOS 10.14, *) {
+            showColorCss = NSApp.effectiveAppearance.name == .darkAqua
+        }
         let html = """
         <head>
             <meta charset="utf-8">
@@ -43,6 +47,7 @@ class AboutViewController: NSViewController {
                 body {
                     font-family: -apple-system;
                     text-align: center;
+                    \(showColorCss ? "color: white;" : "")
                 }
             </style>
         </head>

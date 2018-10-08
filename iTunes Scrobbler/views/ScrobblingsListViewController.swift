@@ -23,10 +23,12 @@ class ScrobblingsListViewController: NSViewController, NSTableViewDelegate, NSTa
 
         titleLabel.stringValue = NSLocalizedString("CACHED_SCROBBLINGS", comment: "ScrobblingListView: Title")
 
-        let vibrant = VibrantDarkView(frame: view.bounds)
-        vibrant.autoresizingMask = NSView.AutoresizingMask.width.union(.height)
-        vibrant.blendingMode = .behindWindow
-        view.addSubview(vibrant, positioned: .below, relativeTo: nil)
+        if NSAppKitVersion.current <= NSAppKitVersion.macOS10_13_4 {
+            let vibrant = VibrantDarkView(frame: view.bounds)
+            vibrant.autoresizingMask = NSView.AutoresizingMask.width.union(.height)
+            vibrant.blendingMode = .behindWindow
+            view.addSubview(vibrant, positioned: .below, relativeTo: nil)
+        }
 
         DistributedNotificationCenter.default().addObserver(
             self,
