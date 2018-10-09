@@ -40,7 +40,7 @@ fileprivate class MenuItemBuilder {
     }
 }
 
-class MenuController: NSObject {
+class MenuController: NSObject, NSMenuItemValidation {
 
     private let statusBarInactiveIcon = "StatusBarInactiveTemplate"
     private let statusBarActiveNotScrobbledIcon = "StatusBarActiveNotScrobbledTemplate"
@@ -121,7 +121,7 @@ class MenuController: NSObject {
         }
     }
 
-    func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
+    public func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
         if menuItem.action == #selector(MenuController.changeRunAtLogin) {
             menuItem.state = openAtLogin ? .on : .off
         } else if menuItem.action == #selector(MenuController.logOut) {
