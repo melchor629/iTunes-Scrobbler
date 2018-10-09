@@ -48,23 +48,31 @@ func <(a: Version, b: Version) -> Bool {
 
 /// Model of a release.
 class Release {
-    let publishedAt: Date
+    let publishedAt: Date?
     let description: String
     let name: String
     let isDraft: Bool
     let isPrerelease: Bool
-    let tag: Version
+    let tag: Version?
     let assets: [ReleaseAsset]
 
     init(_ json: [String: Any]) {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-        publishedAt = formatter.date(from: json["publishedAt"]! as! String)!
+        if let publishedAtString = json["publishedAt"]! as? String {
+            publishedAt = formatter.date(from: publishedAtString)!
+        } else {
+            publishedAt = nil
+        }
         description = json["description"]! as! String
         name = json["name"]! as! String
         isDraft = json["isDraft"]! as! Bool
         isPrerelease = json["isPrerelease"]! as! Bool
-        tag = Version((json["tag"]! as! [String: String])["name"]!)
+        if let tagDict = json["tag"]! as? [String: String] {
+            tag = Version(tagDict["name"]!)
+        } else {
+            tag = nil
+        }
 
         let releaseAssets = (json["releaseAssets"]! as! [String: [[String: [String: String]]]])["edges"]!
         assets = releaseAssets.map { ReleaseAsset($0["node"]!) }
@@ -141,9 +149,9 @@ class GithubUpdater {
 
     /// Does something with the result.
     private func doSomethingWithTheReleases(_ releases: [Release]) {
-        if let release = releases.first {
-            if !pendingToRestart && self.appVersion < release.tag {
-                NSLog("NEW VERSION \(release.tag)")
+        if let release = releases.filter({ !$0.isDraft }).first {
+            if !pendingToRestart && self.appVersion < release.tag! {
+                NSLog("NEW VERSION \(release.tag!)")
                 pendingToRestart = true
                 let asset = release.assets.filter { $0.name.contains(".zip") }.first
                 if let asset = asset {
