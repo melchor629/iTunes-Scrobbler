@@ -28,3 +28,4 @@
 "UPDATE_INSTALLED_BODY"="To apply the update, simply restart the app and you'll enjoy a new version";
 "REQUEST_PERMISSION_TITLE"="Scrobbler permission to access to %@ status";
 "REQUEST_PERMISSION_DENIED"="The app needs access to %@ status to work correctly.\nTo allow that, go to System Preferences > Security and privacy > Privacy > Automatition, and allow iTunes Scrobbler to access to %@.";
+"IS_ALLOWED"="Is allowed";

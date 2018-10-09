@@ -119,8 +119,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, ServiceDelegate, NSWindowDel
             alert.informativeText = NSString(format: NSLocalizedString("REQUEST_PERMISSION_DENIED", comment: "Request permission: Permission denied") as NSString, name, name) as String
             alert.messageText = title
             alert.alertStyle = .critical
-            alert.addButton(withTitle: "IS ALLOWED") //1000
-            alert.addButton(withTitle: "QUIT APP")   //1001
+            alert.addButton(withTitle: NSLocalizedString("IS_ALLOWED", comment: "Request permission: Is allowed button")) //1000
+            alert.addButton(withTitle: NSLocalizedString("QUIT", comment: "Request permission: Quit app button"))         //1001
             let res = alert.runModal()
 
             if res.rawValue == 1001 {

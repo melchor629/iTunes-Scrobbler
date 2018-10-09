@@ -28,3 +28,4 @@
 "UPDATE_INSTALLED_BODY"="Para actualizar basta con cerrar y volver a abrir la aplicación";
 "REQUEST_PERMISSION_TITLE"="Permiso del scrobbler para acceder al estado de %@";
 "REQUEST_PERMISSION_DENIED"="Necesitamos acceso al estado de la aplicación %@ para que funcione correctamente.\nPara ello, ve a Preferencias del Sistema > Seguridad y privacidad > Privacidad > Automatización, y permite a iTunes Scrobbler acceder a %@.";
+"IS_ALLOWED"="Tiene permiso";
