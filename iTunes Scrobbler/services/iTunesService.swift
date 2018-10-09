@@ -44,42 +44,18 @@ on getOrNull(value)
     end if
 end getOrNull
 
-on replaceText(find, replace, subject)
-    set prevTIDs to text item delimiters of AppleScript
-    set text item delimiters of AppleScript to find
-    set subject to text items of subject
-
-    set text item delimiters of AppleScript to replace
-    set subject to subject as text
-    set text item delimiters of AppleScript to prevTIDs
-
-    return subject
-end replaceText
-
 tell application "iTunes"
     set t to current track
     "name: " & my getOrNull(name of t) & "
 artist: " & my getOrNull(artist of t) & "
 album: " & my getOrNull(album of t) & "
-duration: " & my replaceText(",", ".", duration of t as text) & "
+duration: " & (duration of t as text) & "
 albumArtist: " & my getOrNull(album artist of t)
 end tell
 """)
     private let getPlayerPositionScript = AppleScript("""
-on replaceText(find, replace, subject)
-    set prevTIDs to text item delimiters of AppleScript
-    set text item delimiters of AppleScript to find
-    set subject to text items of subject
-
-    set text item delimiters of AppleScript to replace
-    set subject to subject as text
-    set text item delimiters of AppleScript to prevTIDs
-
-    return subject
-end replaceText
-
 tell application "iTunes"
-    "position: " & my replaceText(",", ".", player position as text)
+    "position: " & (player position as text)
 end tell
 """)
     private let getPlayerStateScript = AppleScript("""

@@ -12,7 +12,7 @@ class AppleScript {
 
     private let script: NSAppleScript
     private let lineRegex = try! NSRegularExpression(pattern: "^(\\w[a-z0-9_\\-]+): +(.+)$", options: .caseInsensitive)
-    private let numberRegex = try! NSRegularExpression(pattern: "\\d+\\.?\\d+")
+    private let numberRegex = try! NSRegularExpression(pattern: "^\\d+([.,]\\d+(E\\d+)?)?$", options: .caseInsensitive)
 
     init(_ code: String) {
         self.script = NSAppleScript(source: code)!
@@ -26,7 +26,11 @@ class AppleScript {
                 if line[2] == "null" {
                     res[line[1]] = nil
                 } else if numberRegex.firstMatch(in: line[2], range: NSMakeRange(0, line[2].utf16.count)) != nil {
-                    res[line[1]] = Double(line[2])!
+                    if line[2].contains(",") {
+                        res[line[1]] = Double(line[2].replacingOccurrences(of: ",", with: "."))!
+                    } else {
+                        res[line[1]] = Double(line[2])!
+                    }
                 } else {
                     res[line[1]] = line[2]
                 }
