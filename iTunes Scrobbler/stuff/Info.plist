@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSAppleEventsUsageDescription</key>
-	<string>Get current status for iTunes, to get the song name. You can change this permission in &quot;System Preferences &gt; Security &amp; Privacy &gt; Privacy &gt; Automation&quot;.</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
@@ -19,9 +17,9 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.2.1</string>
+	<string>0.2.2</string>
 	<key>CFBundleVersion</key>
-	<string>4</string>
+	<string>5</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>LSBackgroundOnly</key>
@@ -33,6 +31,8 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<false/>
 	</dict>
+	<key>NSAppleEventsUsageDescription</key>
+	<string>Get current status for iTunes, to get the song name. You can change this permission in "System Preferences &gt; Security &amp; Privacy &gt; Privacy &gt; Automation".</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2018 Melchor Garau Madrigal. All rights reserved.</string>
 	<key>NSMainStoryboardFile</key>
