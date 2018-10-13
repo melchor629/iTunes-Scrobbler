@@ -37,8 +37,10 @@ class iTunesService: Service {
 
     private let getCurrentTrackScript = AppleScript("""
 on getOrNull(value)
-    if value is "" then
+    if value is "" or value is 0 then
         return "null"
+    else if class of value is text then
+        return quote & value & quote
     else
         return value
     end if

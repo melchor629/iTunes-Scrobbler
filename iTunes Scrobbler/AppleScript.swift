@@ -32,7 +32,13 @@ class AppleScript {
                         res[line[1]] = Double(line[2])!
                     }
                 } else {
-                    res[line[1]] = line[2]
+                    if line[2].first! == "\"" && line[2].last! == "\"" {
+                        let start = line[2].index(line[2].startIndex, offsetBy: 1)
+                        let end = line[2].index(line[2].endIndex, offsetBy: -1)
+                        res[line[1]] = line[2][start..<end]
+                    } else {
+                        res[line[1]] = line[2]
+                    }
                 }
             }
     }
