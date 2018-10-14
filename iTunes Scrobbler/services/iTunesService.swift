@@ -114,6 +114,7 @@ end tell
 
     private func checkAppleScriptPermission() {
         if #available(macOS 10.14, *) {
+            if !isRunning { return }
             //See https://www.felix-schwarz.org/blog/2018/08/new-apple-event-apis-in-macos-mojave
             let desc = NSAppleEventDescriptor(bundleIdentifier: "com.apple.iTunes").aeDesc!
             let status = AEDeterminePermissionToAutomateTarget(desc, 0x61657674, typeWildCard, true)
