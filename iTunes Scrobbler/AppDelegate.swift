@@ -85,7 +85,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, ServiceDelegate, NSWindowDel
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
-        // Insert code here to tear down your application
+        if updater != nil {
+            updater!.stop()
+            updater!.applyUpdate()
+        }
     }
 
     @objc func deletedRowInTable(_ notification: NSNotification) {

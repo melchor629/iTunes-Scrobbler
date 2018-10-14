@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Zip
 
 /// Version struct for "x.x.x" strings.
 class Version {
@@ -35,6 +34,10 @@ class Version {
         } else {
             patch = nil
         }
+    }
+
+    var debugDescription: String {
+        get { return patch != nil ? "\(major).\(minor).\(patch!)" : "\(major).\(minor)" }
     }
 }
 
@@ -97,6 +100,7 @@ class GithubUpdater {
     private let appVersion: Version
     private var backgroundTask: DispatchWorkItem?
     private var pendingToRestart = false
+    private var pendingInfo: (URL, URL)? = nil
 
     init() {
         self.token = Tokens.githubToken
@@ -120,6 +124,25 @@ class GithubUpdater {
     func stop() {
         backgroundTask?.cancel()
         backgroundTask = nil
+    }
+
+    /// If there's an update to apply, runs it in a wonderful shell script
+    func applyUpdate() {
+        if let (zip, appDir) = pendingInfo {
+            NSLog("Extracting \(zip.path) to \(appDir.path) when the scrobbler has closed")
+            let shellScript = [
+                "sleep 1",
+                "while pgrep 'iTunesScrobbler'",
+                "do sleep 1",
+                "done",
+                "unzip -o '\(zip.path)' -d '\(appDir.path)'",
+                "rm '\(zip.path)'"
+            ].joined(separator: "; ")
+            let task = Process()
+            task.launchPath = "/usr/bin/env"
+            task.arguments = ["bash", "-c", shellScript]
+            task.launch()
+        }
     }
 
     /// Gets the information from GitHub. Does some interesting parsing stuff.
@@ -151,20 +174,24 @@ class GithubUpdater {
     private func doSomethingWithTheReleases(_ releases: [Release]) {
         if let release = releases.filter({ !$0.isDraft }).first {
             if !pendingToRestart && self.appVersion < release.tag! {
-                NSLog("NEW VERSION \(release.tag!)")
+                NSLog("NEW VERSION \(release.tag!.debugDescription)")
                 pendingToRestart = true
                 let asset = release.assets.filter { $0.name.contains(".zip") }.first
                 if let asset = asset {
+                    let assetUrl = FileManager.default.urls(for: .applicationSupportDirectory,
+                                                            in: .userDomainMask)[0]
+                        .appendingPathComponent(asset.name)
+                    NSLog("Downloading \(asset.url) to \(assetUrl.path)")
                     URLSession.shared.dataTask(with: asset.url) { (data, _, _) in
                         let appDir = Bundle.main.bundleURL.deletingLastPathComponent()
-                        if FileManager.default.createFile(atPath: "/tmp/\(asset.name)", contents: data, attributes: nil) {
-                            try? Zip.unzipFile(URL(string: "/tmp/\(asset.name)")!,
-                                               destination: appDir,
-                                               overwrite: true,
-                                               password: nil)
+                        if FileManager.default.createFile(atPath: assetUrl.path, contents: data, attributes: nil) {
+                            NSLog("App ready to be updated :)")
+                            self.pendingInfo = (assetUrl, appDir)
                             let notif = NSUserNotification()
-                            notif.title = NSLocalizedString("UPDATE_INSTALLED_TITLE", comment: "Notification: Shows when an update has been applied")
-                            notif.informativeText = NSLocalizedString("UPDATE_INSTALLED_BODY", comment: "Notification: Shows when an update has been applied")
+                            notif.title = NSLocalizedString("UPDATE_INSTALLED_TITLE",
+                                                            comment: "Notification: Shows when an update has been applied")
+                            notif.informativeText = NSLocalizedString("UPDATE_INSTALLED_BODY",
+                                                                      comment: "Notification: Shows when an update has been applied")
                             NSUserNotificationCenter.default.deliver(notif)
                         }
                     }.resume()

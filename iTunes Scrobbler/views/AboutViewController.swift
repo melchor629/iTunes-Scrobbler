@@ -15,7 +15,8 @@ fileprivate enum LeError: Error {
 class AboutViewController: NSViewController {
     @IBOutlet weak var titleLabel: NSTextField!
     @IBOutlet weak var textLabel: NSTextView!
-
+    @IBOutlet weak var versionLabel: NSTextField!
+    
     private static let translators = [
         ("English", [ ("@melchor629", "http://melchor9000.me") ]),
         ("Español", [ ("@melchor629", "http://melchor9000.me") ]),
@@ -59,8 +60,10 @@ class AboutViewController: NSViewController {
         } else {
             NSApp.presentError(LeError.InvalidTranslation("The translation text is not in HTML format, you cannot view the window :("))
         }
+
+        versionLabel.stringValue = Bundle.main.infoDictionary!["CFBundleShortVersionString"]! as! String
     }
-    
+
     @IBAction func goToWebpage(_ sender: NSButton) {
         NSWorkspace.shared.open(URL(string: "http://melchor9000.me")!)
     }
