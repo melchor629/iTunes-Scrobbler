@@ -162,6 +162,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, ServiceDelegate, NSWindowDel
     func serviceStateChanged(_ state: ServiceState, _ metadata: SongMetadata?, _ scrobbled: Bool) {
         if state == .inactive {
             menu.setInactiveState()
+            scrobbleNow()
         } else if state == .playing {
             if let metadata = metadata {
                 menu.setSongState(metadata, scrobbled: scrobbled)
@@ -177,6 +178,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, ServiceDelegate, NSWindowDel
         menu.setSongState(metadata, scrobbled: false)
         if menu.loggedIn && DBFacade.shared.sendScrobbles {
             lastfm.updateNowPlaying(metadata) { (corrections, statusCode) in }
+            scrobbleNow()
         }
     }
 
@@ -216,15 +218,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, ServiceDelegate, NSWindowDel
                 NSApplication.shared.presentError(error)
             }
             updateScrobbleCacheCount()
-            scrobbleNow()
         }
     }
 
     func scrobbleNow(_ force: Bool = false) {
         if account != nil && (DBFacade.shared.sendScrobbles || force) {
+            log("Sending scrobbles in cache...")
             if let scrobbles = DBFacade.shared.getScrobbles(limit: 50) {
+                log("Sending \(scrobbles.count) scrobbles...")
                 lastfm.scrobble(scrobbles) { (scrobbled) in
                     try! DBFacade.shared.removeScrobbles(scrobbles)
+                    log("Sent \(scrobbled.count) scrobbles")
                     //TODO Do something about unscrobbled songs
                     DistributedNotificationCenter.default().postNotificationName(
                         AppDelegate.sentScrobblings,
