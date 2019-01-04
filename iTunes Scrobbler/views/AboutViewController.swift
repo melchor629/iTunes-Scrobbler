@@ -16,7 +16,7 @@ class AboutViewController: NSViewController {
     @IBOutlet weak var titleLabel: NSTextField!
     @IBOutlet weak var textLabel: NSTextView!
     @IBOutlet weak var versionLabel: NSTextField!
-    
+
     private static let translators = [
         ("English", [ ("@melchor629", "http://melchor9000.me") ]),
         ("Español", [ ("@melchor629", "http://melchor9000.me") ]),

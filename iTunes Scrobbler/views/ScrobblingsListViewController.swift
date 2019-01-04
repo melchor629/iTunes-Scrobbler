@@ -12,6 +12,7 @@ class ScrobblingsListViewController: NSViewController, NSTableViewDelegate, NSTa
 
     @IBOutlet weak var titleLabel: NSTextField!
     @IBOutlet weak var table: NSTableView!
+    @IBOutlet weak var nothing: NSView!
 
     public static let deletedScrobbling = NSNotification.Name(rawValue: "me.melchor9000.iTunes-Scrobbler.ScrobblingsListViewController.deletedScrobbling")
     
@@ -28,6 +29,7 @@ class ScrobblingsListViewController: NSViewController, NSTableViewDelegate, NSTa
             vibrant.autoresizingMask = NSView.AutoresizingMask.width.union(.height)
             vibrant.blendingMode = .behindWindow
             view.addSubview(vibrant, positioned: .below, relativeTo: nil)
+            nothing.isHidden = false
         }
 
         DistributedNotificationCenter.default().addObserver(
