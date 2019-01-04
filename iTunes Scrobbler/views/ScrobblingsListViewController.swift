@@ -12,7 +12,6 @@ class ScrobblingsListViewController: NSViewController, NSTableViewDelegate, NSTa
 
     @IBOutlet weak var titleLabel: NSTextField!
     @IBOutlet weak var table: NSTableView!
-    @IBOutlet weak var nothing: NSView!
 
     public static let deletedScrobbling = NSNotification.Name(rawValue: "me.melchor9000.iTunes-Scrobbler.ScrobblingsListViewController.deletedScrobbling")
     
@@ -29,7 +28,6 @@ class ScrobblingsListViewController: NSViewController, NSTableViewDelegate, NSTa
             vibrant.autoresizingMask = NSView.AutoresizingMask.width.union(.height)
             vibrant.blendingMode = .behindWindow
             view.addSubview(vibrant, positioned: .below, relativeTo: nil)
-            nothing.isHidden = false
         }
 
         DistributedNotificationCenter.default().addObserver(
@@ -71,6 +69,9 @@ class ScrobblingsListViewController: NSViewController, NSTableViewDelegate, NSTa
         if let album = item.value(forKey: "album") as? String { view?.albumLabel.stringValue = album } else { view?.albumLabel.stringValue = "" }
         let date = item.value(forKey: "timestamp") as! Date
         view?.whenLabel.stringValue = DateFormatter.localizedString(from: date, dateStyle: .short, timeStyle: .short)
+        if NSAppKitVersion.current <= NSAppKitVersion.macOS10_13_4 {
+            view?.nothingView.isHidden = false
+        }
         return view
     }
 

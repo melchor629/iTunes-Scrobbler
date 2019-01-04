@@ -168,7 +168,6 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="nothing" destination="caq-Fm-UJ4" id="e2r-u8-cVk"/>
                         <outlet property="table" destination="Dje-U7-fj6" id="r1M-Eh-Hq6"/>
                         <outlet property="titleLabel" destination="OIS-5v-gVm" id="qEw-e9-rp5"/>
                     </connections>
