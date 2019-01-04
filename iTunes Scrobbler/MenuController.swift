@@ -53,6 +53,7 @@ class MenuController: NSObject, NSMenuItemValidation {
     private var statusItem: NSStatusItem?
     private var cachedScrobblings: Int = 0
     private var username: String?
+    private let log = Logger(category: "MenuController")
 
     internal var loggedIn = false
     internal var loggingIn = false
@@ -154,21 +155,25 @@ class MenuController: NSObject, NSMenuItemValidation {
         alert.runModal()
         app.lastfm.startAutentication()
         loggingIn = true
+        log.debug("Start log in process")
     }
 
     @objc func endLogIn() {
         loggingIn = false
         let app = NSApp.delegate! as! AppDelegate
+        log.debug("Received end of log in process, checking for user token...")
         app.lastfm.endAuthentication { (token, username) in
             if let token = token {
                 do {
                     app.account = try DBFacade.shared.addAccount(username!, token)
                     self.setLoggedInState(username!)
+                    self.log.debug("Token received, stored in DB")
                 } catch let error as NSError {
                     self.setLoggedOutState()
-                    log("Could not save user in DB \(error), \(error.userInfo)")
+                    self.log.error("Could not save user in DB \(error), \(error.userInfo)")
                 }
             } else {
+                self.log.debug("Token is nil, an error has occurred")
                 self.setLoggedOutState()
                 let alert = NSAlert()
                 alert.messageText = NSLocalizedString("LOG_IN_ERROR_MESSAGE_TEXT", comment: "Alert: Message text when logging in but occurred an error")
@@ -180,6 +185,7 @@ class MenuController: NSObject, NSMenuItemValidation {
 
     @objc func cancelLogIn() {
         loggingIn = false
+        log.debug("User has cancelled log in process")
     }
 
     @objc func logOut() {
@@ -188,11 +194,13 @@ class MenuController: NSObject, NSMenuItemValidation {
         app.lastfm.token = nil
         try! DBFacade.shared.deleteAccount(app.account!)
         app.account = nil
+        log.debug("Account has been removed (log out)")
     }
 
     @objc func scrobbleNow() {
         let app = NSApp.delegate! as! AppDelegate
         app.scrobbleNow(true)
+        log.debug("User has pressed 'scrobble now' button")
     }
 
     @objc func showCachedScrobblings() {
@@ -202,12 +210,13 @@ class MenuController: NSObject, NSMenuItemValidation {
     @objc func changeSendScrobbleStatus() {
         mustScrobble = !mustScrobble
         DBFacade.shared.sendScrobbles = mustScrobble
+        log.debug("User changed 'send scrobble' status to \(mustScrobble)")
     }
 
     @objc func changeRunAtLogin() {
         openAtLogin = !openAtLogin
         DBFacade.shared.openAtLogin = openAtLogin
-        log("Changed open at login to \(openAtLogin) " + (SMLoginItemSetEnabled("me.melchor9000.iTunes-Scrobbler-Launcher" as CFString, openAtLogin) ? "sucessfully" : "unsuccessfully"))
+        log.debug("Changed open at login to \(openAtLogin) " + (SMLoginItemSetEnabled("me.melchor9000.iTunes-Scrobbler-Launcher" as CFString, openAtLogin) ? "sucessfully" : "unsuccessfully"))
     }
 
     @objc func openAboutWindow() {
@@ -215,6 +224,7 @@ class MenuController: NSObject, NSMenuItemValidation {
     }
 
     @objc func quit() {
+        log.warning("Quiting...")
         NSApplication.shared.terminate(self)
     }
 
@@ -222,8 +232,10 @@ class MenuController: NSObject, NSMenuItemValidation {
         autoUpdate! = !autoUpdate!
         DBFacade.shared.autoUpdate = autoUpdate!
         if autoUpdate! {
+            log.debug("User changed auto update to on")
             (NSApp.delegate! as! AppDelegate).updater!.start()
         } else {
+            log.debug("User changed auto update to off")
             (NSApp.delegate! as! AppDelegate).updater!.stop()
         }
     }
@@ -231,6 +243,7 @@ class MenuController: NSObject, NSMenuItemValidation {
     @objc func openUserProfile() {
         if let username = self.username {
             NSWorkspace.shared.open(URL(string: "https://www.last.fm/user/\(username)")!)
+            log.debug("User pressed in its username, profile page is opening...")
         }
     }
 
@@ -249,12 +262,14 @@ class MenuController: NSObject, NSMenuItemValidation {
         statusItem?.menu!.item(withTag: inactiveTag)!.title = text
         statusItem?.menu!.item(withTag: scrobbledTag)!.isHidden = !scrobbled
         statusItem?.image = NSImage(named: scrobbled ? statusBarActiveScrobbledIcon : statusBarActiveNotScrobbledIcon)
+        log.debug("Changing song state to \"\(text)\" - Scrobbled? \(scrobbled)")
     }
 
     internal func setInactiveState() {
         statusItem?.menu!.item(withTag: inactiveTag)!.title = NSLocalizedString("STATE_INACTIVE", comment: "Menu: iTunes is inactive")
         statusItem?.menu!.item(withTag: scrobbledTag)!.isHidden = true
         statusItem?.image = NSImage(named: statusBarInactiveIcon)
+        log.debug("Changing song state to inactive")
     }
 
     internal func setLoggedOutState() {
@@ -278,6 +293,7 @@ class MenuController: NSObject, NSMenuItemValidation {
     internal func updateScrobbleCacheCount(_ count: Int) {
         cachedScrobblings = count
         statusItem?.menu!.item(withTag: cacheTag)!.title = NSLocalizedString("IN_CACHE", comment: "Menu: Scrobblings to be scrobbled") + String(count)
+        log.debug("Changing scrobble cache count to \(count)")
     }
 
 }

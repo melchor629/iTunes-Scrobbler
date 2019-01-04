@@ -26,6 +26,7 @@
 		48BCA9902007967100E436DD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48BCA98F2007967100E436DD /* AppDelegate.swift */; };
 		48BCA9922007967100E436DD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 48BCA9912007967100E436DD /* Assets.xcassets */; };
 		48BCA99D200796DC00E436DD /* iTunes Scrobbler Launcher.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = 48BCA98D2007967100E436DD /* iTunes Scrobbler Launcher.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		48C2863921DFBE500044F711 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C2863821DFBE500044F711 /* Logger.swift */; };
 		48CE677D2111EFDE005B226E /* SongMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CE677C2111EFDE005B226E /* SongMetadata.swift */; };
 		48CE67852111F18C005B226E /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CE67842111F18C005B226E /* Service.swift */; };
 		48D6609D2095CB27004F0FD0 /* GithubUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D6609C2095CB27004F0FD0 /* GithubUpdater.swift */; };
@@ -80,6 +81,7 @@
 		48BCA98F2007967100E436DD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		48BCA9912007967100E436DD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		48BCA9962007967100E436DD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		48C2863821DFBE500044F711 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		48CE677C2111EFDE005B226E /* SongMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongMetadata.swift; sourceTree = "<group>"; };
 		48CE67842111F18C005B226E /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		48D6609C2095CB27004F0FD0 /* GithubUpdater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubUpdater.swift; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 				481CA84620BB01640042CE99 /* Tokens.swift */,
 				48CE677C2111EFDE005B226E /* SongMetadata.swift */,
 				4893B6E3216BCB660095A6F4 /* AppleScript.swift */,
+				48C2863821DFBE500044F711 /* Logger.swift */,
 			);
 			path = "iTunes Scrobbler";
 			sourceTree = "<group>";
@@ -316,6 +319,7 @@
 				48277D3120022953001F07E0 /* iTunes_Scrobbler.xcdatamodeld in Sources */,
 				4871046120077F7E00974EA1 /* DatabaseFacade.swift in Sources */,
 				48277D4620023999001F07E0 /* iTunesService.swift in Sources */,
+				48C2863921DFBE500044F711 /* Logger.swift in Sources */,
 				48B1656B20028F9A00C54E15 /* Lastfm.swift in Sources */,
 				48109F12200640300098A0D8 /* ScrobblingsListViewController.swift in Sources */,
 				4893B6E6216BDED70095A6F4 /* VibrantDarkView.swift in Sources */,

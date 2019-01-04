@@ -65,19 +65,20 @@ tell application "iTunes"
     "state: " & player state
 end tell
 """)
+    private let log = Logger(category: "iTunesService")
 
     var delegate: ServiceDelegate?
 
     private var state = ServiceState.inactive {
         didSet {
-            log("Player State is now: \(state)")
+            log.debug("Player State is now: \(state)")
             delegate?.serviceStateChanged(state, state == .inactive ? nil : self.metadata, scrobbled)
         }
     }
     private var metadata: SongMetadata = SongMetadata() {
         didSet {
             timeStartPlayingSong = Date()
-            log("Player metadata is now: \(metadata) [\(timeStartPlayingSong!)]")
+            log.debug("Player metadata is now: \(metadata) [\(timeStartPlayingSong!)]")
             delegate?.serviceSongChanged(metadata)
         }
     }
@@ -101,7 +102,7 @@ end tell
 
     @objc func playerStateChanged(_ notification: Notification) {
         let playerState = notification.userInfo!["Player State"] as! String
-        log("iTunes status changed received: \(playerState)")
+        log.debug("iTunes status changed received: \(playerState)")
         if playerState == "Stopped" {
             state = .inactive
         } else if playerState == "Paused" {
@@ -166,12 +167,12 @@ end tell
                 let scrobbleTime = min(metadata.duration / 2, 4 * 60)
                 if position < scrobbleTime {
                     let timeToHalf = Int((scrobbleTime - position) * 1000)
-                    log("Next scrobbling checc \(timeToHalf)ms")
+                    log.debug("Next scrobbling checc \(timeToHalf)ms")
                     DispatchQueue.main.asyncAfter(deadline: DispatchTimeInterval.milliseconds(timeToHalf).fromNow) {
                         self.checkForScrobbling(inside: true)
                     }
                 } else {
-                    inside ? log("Scrobbling from inside!") : log("Scrobbling!")
+                    inside ? log.debug("Scrobbling from inside!") : log.debug("Scrobbling!")
                     scrobbled = true
                     delegate?.serviceScrobbleTime(metadata, timeStartPlayingSong!)
                 }

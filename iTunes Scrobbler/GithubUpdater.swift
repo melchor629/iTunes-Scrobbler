@@ -101,6 +101,7 @@ class GithubUpdater {
     private var backgroundTask: DispatchWorkItem?
     private var pendingToRestart = false
     private var pendingInfo: (URL, URL)? = nil
+    private let log = Logger(category: "GithubUpdater")
 
     init() {
         self.token = Tokens.githubToken
@@ -110,7 +111,7 @@ class GithubUpdater {
     /// Starts the background task of checking for updates (once per hour).
     func start() {
         backgroundTask = DispatchWorkItem {
-            NSLog("Checking for updates...")
+            self.log.info("Checking for updates...")
             self.getInfo()
             if self.backgroundTask != nil {
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + DispatchTimeInterval.seconds(3600),
@@ -129,7 +130,7 @@ class GithubUpdater {
     /// If there's an update to apply, runs it in a wonderful shell script
     func applyUpdate() {
         if let (zip, appDir) = pendingInfo {
-            NSLog("Extracting \(zip.path) to \(appDir.path) when the scrobbler has closed")
+            self.log.notice("Extracting \(zip.path) to \(appDir.path) when the scrobbler has closed")
             let shellScript = [
                 "sleep 1",
                 "while pgrep 'iTunesScrobbler'",
@@ -174,18 +175,18 @@ class GithubUpdater {
     private func doSomethingWithTheReleases(_ releases: [Release]) {
         if let release = releases.filter({ !$0.isDraft }).first {
             if !pendingToRestart && self.appVersion < release.tag! {
-                NSLog("NEW VERSION \(release.tag!.debugDescription)")
+                self.log.notice("NEW VERSION \(release.tag!.debugDescription)")
                 pendingToRestart = true
                 let asset = release.assets.filter { $0.name.contains(".zip") }.first
                 if let asset = asset {
                     let assetUrl = FileManager.default.urls(for: .applicationSupportDirectory,
                                                             in: .userDomainMask)[0]
                         .appendingPathComponent(asset.name)
-                    NSLog("Downloading \(asset.url) to \(assetUrl.path)")
+                    self.log.info("Downloading \(asset.url) to \(assetUrl.path)")
                     URLSession.shared.dataTask(with: asset.url) { (data, _, _) in
                         let appDir = Bundle.main.bundleURL.deletingLastPathComponent()
                         if FileManager.default.createFile(atPath: assetUrl.path, contents: data, attributes: nil) {
-                            NSLog("App ready to be updated :)")
+                            self.log.info("App ready to be updated :)")
                             self.pendingInfo = (assetUrl, appDir)
                             let notif = NSUserNotification()
                             notif.title = NSLocalizedString("UPDATE_INSTALLED_TITLE",
@@ -197,7 +198,7 @@ class GithubUpdater {
                     }.resume()
                 }
             } else if !pendingToRestart {
-                NSLog("No update found")
+                self.log.info("No update found")
             }
         }
     }

@@ -27,6 +27,7 @@ class Lastfm {
     private let baseUrl: String = "https://ws.audioscrobbler.com/2.0/"
     private var userToken: String?
     private var authToken: String?
+    private let log = Logger(category: "Lastfm")
 
     internal var token: String? {
         get { return self.userToken }
@@ -176,7 +177,7 @@ class Lastfm {
 
         let task = URLSession.shared.dataTask(with: URL(string: "\(baseUrl)?\(query)")!) { (data, response, error) in
             if error != nil {
-                log(error!.localizedDescription)
+                self.log.error(error!.localizedDescription)
                 //In case of error, won't do anything. The app will retry after to do the same request
             } else {
                 let httpResponse = response! as! HTTPURLResponse
@@ -213,7 +214,7 @@ class Lastfm {
 
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             if error != nil {
-                log(error!.localizedDescription)
+                self.log.error(error!.localizedDescription)
                 //In case of error, won't do anything. The app will retry after to do the same request
             } else {
                 let httpResponse = response! as! HTTPURLResponse

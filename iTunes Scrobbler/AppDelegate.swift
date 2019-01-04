@@ -8,16 +8,6 @@
 
 import Cocoa
 
-internal func log(_ msg: String) {
-    #if !NDEBUG
-        NSLog("LOG: \(msg)")
-    #endif
-}
-
-internal func log(_ obj: Any) {
-    log(String(describing: obj))
-}
-
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, ServiceDelegate, NSWindowDelegate {
 
@@ -33,6 +23,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, ServiceDelegate, NSWindowDel
     internal var aboutWindow: NSWindowController?
     internal var scrobblingsWindow: NSWindowController?
 
+    private let log = Logger(category: "AppDelegate")
+
     override init() {
         self.storyboard = NSStoryboard(name: "Main", bundle: nil)
         self.lastfm = Lastfm()
@@ -42,6 +34,16 @@ class AppDelegate: NSObject, NSApplicationDelegate, ServiceDelegate, NSWindowDel
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         service.delegate = self
+
+        NSSetUncaughtExceptionHandler() { e in
+            let log = Logger(category: "UncaughtExceptionHandler")
+            log.fatal("Uncaught exception occurred :(")
+            log.fatal("Name: \(e.name)")
+            log.fatal("Reason: \(e.reason ?? "N/A")")
+            log.fatal("User Info: \(e.userInfo ?? ["Nothing": "At All"])")
+            log.fatal("Stack:")
+            zip(e.callStackSymbols, e.callStackReturnAddresses).forEach() { log.fatal(" - [\($0.1)] \($0.0)") }
+        }
 
         if let account = DBFacade.shared.getAccount() {
             self.account = account.2
@@ -100,7 +102,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, ServiceDelegate, NSWindowDel
             aboutWindow = self.storyboard.instantiateController(withIdentifier: "about") as? NSWindowController
             aboutWindow!.showWindow(self)
             aboutWindow!.window!.delegate = self
-            NSLog("Opened 'About' window")
+            log.debug("Opened 'About' window")
         }
     }
 
@@ -109,7 +111,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, ServiceDelegate, NSWindowDel
             scrobblingsWindow = self.storyboard.instantiateController(withIdentifier: "scrobbleList") as? NSWindowController
             scrobblingsWindow!.showWindow(self)
             scrobblingsWindow!.window!.delegate = self
-            NSLog("Opened 'Scrobbling Cache' window")
+            log.debug("Opened 'Scrobbling Cache' window")
         }
     }
 
@@ -149,10 +151,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, ServiceDelegate, NSWindowDel
         if let who = notification.object as? NSWindow {
             if scrobblingsWindow != nil && who == scrobblingsWindow!.window! {
                 scrobblingsWindow = nil
-                NSLog("Closed 'Scrobbling Cache' window")
+                log.debug("Closed 'Scrobbling Cache' window")
             } else if aboutWindow != nil && who == aboutWindow!.window! {
                 aboutWindow = nil
-                NSLog("Closed 'About' window")
+                log.debug("Closed 'About' window")
             }
         }
     }
@@ -192,14 +194,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, ServiceDelegate, NSWindowDel
                 let tm2 = lastScrobbling.value(forKey: "timestamp") as! Date
                 let diff = time.timeIntervalSinceReferenceDate - tm2.timeIntervalSinceReferenceDate
                 if m2 == metadata && diff < metadata.duration {
-                    log("Same song scrobbling in less than duration time, not doing it")
+                    log.warning("Same song scrobbling in less than duration time, not doing it")
                     return
                 }
             } else {
                 let last = DBFacade.shared.lastScrobble
                 let diff = time.timeIntervalSince1970 - last.0.timeIntervalSince1970
                 if metadata.hash == last.1 && diff < metadata.duration {
-                    log("Same song scrobbling in less than duration time 2, not doing it")
+                    log.warning("Same song scrobbling in less than duration time 2, not doing it")
                     return
                 }
             }
@@ -214,7 +216,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, ServiceDelegate, NSWindowDel
                 )
                 DBFacade.shared.lastScrobble = (time, metadata.hash)
             } catch let error as NSError {
-                log("Could not save scrobbling in cache \(error), \(error.userInfo)")
+                log.error("Could not save scrobbling in cache \(error), \(error.userInfo)")
                 NSApplication.shared.presentError(error)
             }
             updateScrobbleCacheCount()
@@ -223,12 +225,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, ServiceDelegate, NSWindowDel
 
     func scrobbleNow(_ force: Bool = false) {
         if account != nil && (DBFacade.shared.sendScrobbles || force) {
-            log("Sending scrobbles in cache...")
+            log.info("Sending scrobbles in cache...")
             if let scrobbles = DBFacade.shared.getScrobbles(limit: 50) {
-                log("Sending \(scrobbles.count) scrobbles...")
+                log.debug("Sending \(scrobbles.count) scrobbles...")
                 lastfm.scrobble(scrobbles) { (scrobbled) in
                     try! DBFacade.shared.removeScrobbles(scrobbles)
-                    log("Sent \(scrobbled.count) scrobbles")
+                    self.log.info("Sent \(scrobbled.count) scrobbles")
                     //TODO Do something about unscrobbled songs
                     DistributedNotificationCenter.default().postNotificationName(
                         AppDelegate.sentScrobblings,
@@ -287,7 +289,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, ServiceDelegate, NSWindowDel
         let context = persistentContainer.viewContext
 
         if !context.commitEditing() {
-            NSLog("\(NSStringFromClass(type(of: self))) unable to commit editing before saving")
+            log.error("\(NSStringFromClass(type(of: self))) unable to commit editing before saving")
         }
         if context.hasChanges {
             do {
@@ -310,7 +312,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, ServiceDelegate, NSWindowDel
         let context = persistentContainer.viewContext
         
         if !context.commitEditing() {
-            NSLog("\(NSStringFromClass(type(of: self))) unable to commit editing to terminate")
+            log.error("\(NSStringFromClass(type(of: self))) unable to commit editing to terminate")
             return .terminateCancel
         }
         

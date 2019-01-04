@@ -17,6 +17,10 @@ _you must describe what you expect the app should behave when the issue happens.
 
 _sometimes this is not applicable, but it does, fill it, it's helpful_
 
+## Crash log
+
+_if the error has something to do with a crash, please look after the logs (located at `/Users/<YOUR_USER>/Library/Logs/iTunesScrobbler/`) and grab the latest. We would like to have at least the crash error part of the log._
+
 ## Extra
 
 _fill with something you think can be usefull for the issue. If you feel that extra information is not needed, don't fill it. It's up to you :) Logs and crash dumps can be linked here_
