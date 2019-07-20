@@ -269,15 +269,11 @@ class Lastfm {
     }
 
     //https://stackoverflow.com/questions/32163848/how-to-convert-string-to-md5-hash-using-ios-swift
+    //https://stackoverflow.com/questions/25761344/how-to-hash-nsstring-with-sha1-in-swift/25762128#25762128 (Swift 5 answer)
     private func md5Hex(_ str: String) -> String {
-        let data = str.data(using: .utf8)!
-        var digestData = Data(count: Int(CC_MD5_DIGEST_LENGTH))
-        _ = digestData.withUnsafeMutableBytes { digestBytes in
-            return data.withUnsafeBytes { (messageBytes) in
-                return CC_MD5(messageBytes, CC_LONG(data.count), digestBytes)
-            }
-        }
-
+        let data = Data(str.utf8)
+        var digestData = [UInt8](repeating: 0, count: Int(CC_MD5_DIGEST_LENGTH))
+        _ = data.withUnsafeBytes { CC_MD5($0.baseAddress, CC_LONG(data.count), &digestData) }
         return digestData.map { String(format: "%02hhx", $0) }.joined()
     }
 
