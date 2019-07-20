@@ -47,12 +47,11 @@ on getOrNull(value)
 end getOrNull
 
 tell application "iTunes"
-    set t to current track
-    "name: " & my getOrNull(name of t) & "
-artist: " & my getOrNull(artist of t) & "
-album: " & my getOrNull(album of t) & "
-duration: " & (duration of t as text) & "
-albumArtist: " & my getOrNull(album artist of t)
+    "name: " & my getOrNull(name of current track) & "
+artist: " & my getOrNull(artist of current track) & "
+album: " & my getOrNull(album of current track) & "
+duration: " & (duration of current track as text) & "
+albumArtist: " & my getOrNull(album artist of current track)
 end tell
 """)
     private let getPlayerPositionScript = AppleScript("""

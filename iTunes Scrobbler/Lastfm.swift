@@ -14,7 +14,7 @@ enum LastfmError: Error {
 }
 
 fileprivate extension String {
-    fileprivate func urlEncode() -> String {
+    func urlEncode() -> String {
         return self.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!.replacingOccurrences(of: "&", with: "%26")
     }
 }
@@ -273,9 +273,9 @@ class Lastfm {
         let data = str.data(using: .utf8)!
         var digestData = Data(count: Int(CC_MD5_DIGEST_LENGTH))
         _ = digestData.withUnsafeMutableBytes { digestBytes in
-            return data.withUnsafeBytes({ (messageBytes) in
+            return data.withUnsafeBytes { (messageBytes) in
                 return CC_MD5(messageBytes, CC_LONG(data.count), digestBytes)
-            })
+            }
         }
 
         return digestData.map { String(format: "%02hhx", $0) }.joined()
