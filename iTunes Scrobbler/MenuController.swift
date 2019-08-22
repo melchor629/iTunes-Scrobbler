@@ -254,14 +254,19 @@ class MenuController: NSObject, NSMenuItemValidation {
         }
 
         if paused {
-            text = "❚❚ \(text)"
+            text = "⏸ \(text)"
         } else {
-            text = "► \(text)"
+            text = "▶️ \(text)"
+        }
+
+        if metadata.canBeScrobbled {
+            statusItem?.image = NSImage(named: scrobbled ? statusBarActiveScrobbledIcon : statusBarActiveNotScrobbledIcon)
+        } else {
+            statusItem?.image = NSImage(named: statusBarInactiveIcon)
         }
 
         statusItem?.menu!.item(withTag: inactiveTag)!.title = text
         statusItem?.menu!.item(withTag: scrobbledTag)!.isHidden = !scrobbled
-        statusItem?.image = NSImage(named: scrobbled ? statusBarActiveScrobbledIcon : statusBarActiveNotScrobbledIcon)
         log.debug("Changing song state to \"\(text)\" - Scrobbled? \(scrobbled)")
     }
 
