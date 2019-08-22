@@ -25,7 +25,7 @@ extension SongMetadata {
         artistName = info["artist"] as! String?
         albumArtistName = info["albumArtist"] as! String?
         albumName = info["album"] as! String?
-        duration = info["duration"] as! Double
+        duration = info["duration"] as? Double
     }
 }
 
@@ -162,8 +162,9 @@ end tell
             state = .inactive
         } else {
             if !scrobbled {
+                guard metadata.canBeScrobbled else { return }
                 let position = getPlayerPositionScript.run()["position"] as! Double
-                let scrobbleTime = min(metadata.duration / 2, 4 * 60)
+                let scrobbleTime = min(metadata.duration! / 2, 4 * 60)
                 if position < scrobbleTime {
                     let timeToHalf = Int((scrobbleTime - position) * 1000)
                     log.debug("Next scrobbling checc \(timeToHalf)ms")

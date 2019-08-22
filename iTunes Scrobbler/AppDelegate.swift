@@ -188,19 +188,19 @@ class AppDelegate: NSObject, NSApplicationDelegate, ServiceDelegate, NSWindowDel
         menu.setSongState(metadata, scrobbled: true)
 
         //Save always the scrobblings, just in case
-        if metadata.trackTitle != nil && metadata.artistName != nil {
+        if metadata.canBeScrobbled {
             if let lastScrobbling = DBFacade.shared.getLastScrobble() {
                 let m2 = SongMetadata(managedObject: lastScrobbling)
                 let tm2 = lastScrobbling.value(forKey: "timestamp") as! Date
                 let diff = time.timeIntervalSinceReferenceDate - tm2.timeIntervalSinceReferenceDate
-                if m2 == metadata && diff < metadata.duration {
+                if m2 == metadata && diff < metadata.duration! {
                     log.warning("Same song scrobbling in less than duration time, not doing it")
                     return
                 }
             } else {
                 let last = DBFacade.shared.lastScrobble
                 let diff = time.timeIntervalSince1970 - last.0.timeIntervalSince1970
-                if metadata.hash == last.1 && diff < metadata.duration {
+                if metadata.hash == last.1 && diff < metadata.duration! {
                     log.warning("Same song scrobbling in less than duration time 2, not doing it")
                     return
                 }

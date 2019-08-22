@@ -84,13 +84,13 @@ class Lastfm {
      - Parameter callback: When the response comes, it will be called.
      */
     internal func updateNowPlaying(_ metadata: SongMetadata, callback: @escaping ([String: Any], Int) -> Void) {
-        if metadata.trackTitle != nil && metadata.artistName != nil {
+        if metadata.canBeScrobbled {
             var params: [String: String] = [:]
             params["track"] = metadata.trackTitle!
             params["artist"] = metadata.artistName!
             if let albumArtist = metadata.albumArtistName { params["albumArtist"] = albumArtist }
             if let album = metadata.albumName { params["album"] = album }
-            params["duration"] = String(Int(metadata.duration.rounded()))
+            params["duration"] = String(Int(metadata.duration!.rounded()))
             params["method"] = "track.updateNowPlaying"
             makeRequest(post: params) { (json, statusCode) in
                 callback(json as! [String: Any], statusCode)

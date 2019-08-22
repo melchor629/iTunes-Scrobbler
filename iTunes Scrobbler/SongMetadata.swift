@@ -30,7 +30,7 @@ struct SongMetadata {
     var artistName: String?
     var albumArtistName: String?
     var albumName: String?
-    var duration = 0.0
+    var duration: Double? = 0.0
 
     init() {}
 
@@ -51,6 +51,10 @@ struct SongMetadata {
                 (intOr0(albumArtistName?.hashValue) << 4) ^
                 (intOr0(albumName?.hashValue) << 6)
         }
+    }
+
+    var canBeScrobbled: Bool {
+        return trackTitle != nil && artistName != nil && duration != nil
     }
 
 }
