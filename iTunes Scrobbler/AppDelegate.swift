@@ -14,7 +14,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, ServiceDelegate, NSWindowDel
     internal static let addedScrobbling = NSNotification.Name(rawValue: "me.melchor9000.iTunes-Scrobbler.AppDelegate.addedScrobbling")
     internal static let sentScrobblings = NSNotification.Name(rawValue: "me.melchor9000.iTunes-Scrobbler.AppDelegate.sentScrobblings")
 
-    internal let service = iTunesService()
+    internal var service: Service
     internal let menu = MenuController()
     internal var account: NSManagedObject?
     internal let lastfm: Lastfm
@@ -29,12 +29,18 @@ class AppDelegate: NSObject, NSApplicationDelegate, ServiceDelegate, NSWindowDel
         self.storyboard = NSStoryboard(name: "Main", bundle: nil)
         self.lastfm = Lastfm()
         self.updater = GithubUpdater()
+
+        if #available(macOS 10.15, *) {
+            self.service = MusicService()
+        } else {
+            self.service = iTunesService()
+        }
+
         super.init()
+        self.service.delegate = self
     }
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        service.delegate = self
-
         NSSetUncaughtExceptionHandler() { e in
             let log = Logger(category: "UncaughtExceptionHandler")
             log.fatal("Uncaught exception occurred :(")

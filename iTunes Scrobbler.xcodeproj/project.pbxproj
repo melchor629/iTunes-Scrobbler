@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		48109F12200640300098A0D8 /* ScrobblingsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48109F11200640300098A0D8 /* ScrobblingsListViewController.swift */; };
+		481312D2234E71D400D21C97 /* MusicService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 481312D1234E71D400D21C97 /* MusicService.swift */; };
 		481CA84720BB01640042CE99 /* Tokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 481CA84620BB01640042CE99 /* Tokens.swift */; };
 		48277D2C20022953001F07E0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48277D2B20022953001F07E0 /* AppDelegate.swift */; };
 		48277D3120022953001F07E0 /* iTunes_Scrobbler.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 48277D2F20022953001F07E0 /* iTunes_Scrobbler.xcdatamodeld */; };
@@ -58,6 +59,7 @@
 
 /* Begin PBXFileReference section */
 		48109F11200640300098A0D8 /* ScrobblingsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrobblingsListViewController.swift; sourceTree = "<group>"; };
+		481312D1234E71D400D21C97 /* MusicService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicService.swift; sourceTree = "<group>"; };
 		481CA84620BB01640042CE99 /* Tokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tokens.swift; sourceTree = "<group>"; };
 		48277D2820022953001F07E0 /* iTunes Scrobbler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iTunes Scrobbler.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		48277D2B20022953001F07E0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -194,6 +196,7 @@
 			children = (
 				48CE67842111F18C005B226E /* Service.swift */,
 				48277D4520023999001F07E0 /* iTunesService.swift */,
+				481312D1234E71D400D21C97 /* MusicService.swift */,
 			);
 			path = services;
 			sourceTree = "<group>";
@@ -244,7 +247,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0920;
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 1110;
 				ORGANIZATIONNAME = "Melchor Garau Madrigal";
 				TargetAttributes = {
 					48277D2720022953001F07E0 = {
@@ -327,6 +330,7 @@
 				48D6609D2095CB27004F0FD0 /* GithubUpdater.swift in Sources */,
 				48277D2C20022953001F07E0 /* AppDelegate.swift in Sources */,
 				481CA84720BB01640042CE99 /* Tokens.swift in Sources */,
+				481312D2234E71D400D21C97 /* MusicService.swift in Sources */,
 				48CE677D2111EFDE005B226E /* SongMetadata.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -490,6 +494,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = "";
