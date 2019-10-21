@@ -8,6 +8,10 @@
 
 import Foundation
 
+struct AppleScriptError: Error {
+    let message: String
+}
+
 class AppleScript {
 
     private let script: NSAppleScript
@@ -18,8 +22,14 @@ class AppleScript {
         self.script = NSAppleScript(source: code)!
     }
 
-    func run() -> [String: Any] {
-        return script.executeAndReturnError(nil).stringValue!
+    func run() throws -> [String: Any] {
+        var errors: NSDictionary? = nil
+        let res = script.executeAndReturnError(&errors)
+        if let errors = errors {
+            throw AppleScriptError(message: errors.value(forKey: "NSAppleScriptErrorMessage") as! String)
+        }
+
+        return res.stringValue!
             .split(separator: "\n")
             .map { splitLine(String($0)) }
             .reduce(into: [:] as [String: Any]) { (res, line) in

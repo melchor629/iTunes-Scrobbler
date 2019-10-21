@@ -100,7 +100,7 @@ end tell
     }
 
     @objc func playerStateChanged(_ notification: Notification) {
-        let playerState = notification.userInfo!["Player State"] as! String
+        let playerState = notification.userInfo?["Player State"] as? String ?? "Stopped"
         log.debug("iTunes status changed received: \(playerState)")
         if playerState == "Stopped" {
             state = .inactive
@@ -134,13 +134,21 @@ end tell
 
     private func checkSongChanges() {
         checkAppleScriptPermission()
-        let currentSong = SongMetadata(getCurrentTrackScript.run())
+        do {
+            let scriptResult = try getCurrentTrackScript.run()
+            let currentSong = SongMetadata(scriptResult)
 
-        if currentSong != self.metadata {
-            self.metadata = currentSong
-            self.scrobbled = false
+            if currentSong != self.metadata {
+                self.metadata = currentSong
+                self.scrobbled = false
+            }
+
+            checkForScrobbling()
+        } catch let e as AppleScriptError {
+            log.error("Script for getting current track metadata failed: \(e.message)")
+        } catch let e {
+            log.error("Getting current track metadata has failed: \(e)")
         }
-        checkForScrobbling()
     }
 
     private var isRunning: Bool {
@@ -153,7 +161,7 @@ end tell
 
     private var playerState: String {
         get {
-            return getPlayerStateScript.run()["state"] as! String
+            return (try? getPlayerStateScript.run())?["state"] as? String ?? "Stopped"
         }
     }
 
@@ -163,7 +171,17 @@ end tell
         } else {
             if !scrobbled {
                 guard metadata.canBeScrobbled else { return }
-                let position = getPlayerPositionScript.run()["position"] as! Double
+                var position: Double = 0.0
+                do {
+                    let scriptResult = try getPlayerPositionScript.run()
+                    log.debug("script result for position: \(scriptResult["position"] ?? "nil")")
+                    position = scriptResult["position"] as? Double ?? 0.0
+                } catch let e as AppleScriptError {
+                    log.error("Could not get player position: \(e.message)")
+                } catch let e {
+                    log.error("Could not get player position: \(e)")
+                }
+
                 let scrobbleTime = min(metadata.duration! / 2, 4 * 60)
                 if position < scrobbleTime {
                     let timeToHalf = Int((scrobbleTime - position) * 1000)
