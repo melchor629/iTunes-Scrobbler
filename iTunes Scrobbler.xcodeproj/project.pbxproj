@@ -70,8 +70,10 @@
 		48277D4520023999001F07E0 /* iTunesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iTunesService.swift; sourceTree = "<group>"; };
 		48277D4D200259F1001F07E0 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		483AE8BE2008BBD8008B038B /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
+		4856A9D5235E239500D650E2 /* iTunes Scrobbler Launcher.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "iTunes Scrobbler Launcher.entitlements"; sourceTree = "<group>"; };
 		4871046020077F7E00974EA1 /* DatabaseFacade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseFacade.swift; sourceTree = "<group>"; };
 		4871046220078E1700974EA1 /* WindowInFront.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowInFront.swift; sourceTree = "<group>"; };
+		4874C3AE23510F1A00978DFA /* iTunes Scrobbler.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "iTunes Scrobbler.entitlements"; sourceTree = "<group>"; };
 		4893B6E3216BCB660095A6F4 /* AppleScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleScript.swift; sourceTree = "<group>"; };
 		4893B6E5216BDED70095A6F4 /* VibrantDarkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VibrantDarkView.swift; sourceTree = "<group>"; };
 		48B165662002673400C54E15 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 		48277D2A20022953001F07E0 /* iTunes Scrobbler */ = {
 			isa = PBXGroup;
 			children = (
+				4874C3AE23510F1A00978DFA /* iTunes Scrobbler.entitlements */,
 				48F105922003A0A80099BF23 /* iTunes_Scrobbler-BridgingHeader.h */,
 				48CE67832111F176005B226E /* services */,
 				48109F10200640140098A0D8 /* views */,
@@ -183,6 +186,7 @@
 		48BCA98E2007967100E436DD /* iTunes Scrobbler Launcher */ = {
 			isa = PBXGroup;
 			children = (
+				4856A9D5235E239500D650E2 /* iTunes Scrobbler Launcher.entitlements */,
 				48BCA98F2007967100E436DD /* AppDelegate.swift */,
 				48BCA9912007967100E436DD /* Assets.xcassets */,
 				48BCA9962007967100E436DD /* Info.plist */,
@@ -475,15 +479,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "iTunes Scrobbler/iTunes Scrobbler.entitlements";
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/iTunes Scrobbler/stuff/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 0.3.2;
+				MARKETING_VERSION = 0.3.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "me.melchor9000.iTunes-Scrobbler";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -496,15 +502,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "iTunes Scrobbler/iTunes Scrobbler.entitlements";
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/iTunes Scrobbler/stuff/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 0.3.2;
+				MARKETING_VERSION = 0.3.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "me.melchor9000.iTunes-Scrobbler";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -517,10 +525,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "iTunes Scrobbler Launcher/iTunes Scrobbler Launcher.entitlements";
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "iTunes Scrobbler Launcher/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
@@ -536,10 +546,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "iTunes Scrobbler Launcher/iTunes Scrobbler Launcher.entitlements";
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "iTunes Scrobbler Launcher/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
