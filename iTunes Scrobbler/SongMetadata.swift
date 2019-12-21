@@ -19,11 +19,6 @@ internal func emptyIsNil(_ a: String?) -> String? {
     }
 }
 
-/// Returns the number or 0 if nil.
-internal func intOr0(_ a: Int?) -> Int {
-    if let a = a { return a } else { return 0 }
-}
-
 /// Holds metadata from a song.
 struct SongMetadata {
     var trackTitle: String?
@@ -46,15 +41,19 @@ struct SongMetadata {
 
     var hash: Int {
         get {
-            return intOr0(trackTitle?.hashValue) ^
-                (intOr0(artistName?.hashValue) << 2) ^
-                (intOr0(albumArtistName?.hashValue) << 4) ^
-                (intOr0(albumName?.hashValue) << 6)
+            let trackTitleHash = trackTitle?.hashValue ?? 0
+            let artistNameHash = artistName?.hashValue ?? 0
+            let albumArtistNameHash = albumArtistName?.hashValue ?? 0
+            let albumNameHash = albumName?.hashValue ?? 0
+            return trackTitleHash ^
+                (artistNameHash << 2) ^
+                (albumArtistNameHash << 4) ^
+                (albumNameHash << 6)
         }
     }
 
     var canBeScrobbled: Bool {
-        return trackTitle != nil && artistName != nil && duration != nil
+        return trackTitle != nil && artistName != nil && duration != nil && duration! >= 30
     }
 
 }

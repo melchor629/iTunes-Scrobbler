@@ -226,6 +226,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, ServiceDelegate, NSWindowDel
                 NSApplication.shared.presentError(error)
             }
             updateScrobbleCacheCount()
+        } else {
+            log.info("The song '\(metadata.artistName ?? "unknown") - \(metadata.trackTitle ?? "unknown")' with duration \(metadata.duration ?? -1) cannot be scrobbled")
         }
     }
 
