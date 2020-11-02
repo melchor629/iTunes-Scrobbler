@@ -143,6 +143,8 @@ class MenuController: NSObject, NSMenuItemValidation {
         } else if menuItem.action == #selector(MenuController.changeAutoUpdate) {
             menuItem.isHidden = autoUpdate == nil
             menuItem.state = autoUpdate != nil && autoUpdate! ? .on : .off
+        } else if menuItem.action == #selector(MenuController.openUserProfile) {
+            menuItem.isHidden = !loggedIn || loggingIn
         }
         return true
     }

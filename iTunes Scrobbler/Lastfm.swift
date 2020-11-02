@@ -15,7 +15,9 @@ enum LastfmError: Error {
 
 fileprivate extension String {
     func urlEncode() -> String {
-        return self.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!.replacingOccurrences(of: "&", with: "%26")
+        return self.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+            .replacingOccurrences(of: "&", with: "%26")
+            .replacingOccurrences(of: "+", with: "%2B")
     }
 }
 
@@ -104,7 +106,7 @@ class Lastfm {
      - Parameter m: List of songs from database.
      - Parameter callback: Block of code that will be called when the songs have been scrobbled.
      */
-    func scrobble(_ m: [NSManagedObject], callback: @escaping ([NSManagedObject]) -> Void) {
+    func scrobble(_ m: [NSManagedObject], callback: @escaping ([NSManagedObject], ([String: Any?]?, Int)?) -> Void) {
         var params: [String: [String?]] = [
             "artist": [],
             "track": [],
@@ -147,9 +149,9 @@ class Lastfm {
                     }
                     pos += 1
                 }
-                DispatchQueue.main.async { callback(scrobbled) }
+                DispatchQueue.main.async { callback(scrobbled, nil) }
             } else {
-                DispatchQueue.main.async { callback([]) }
+                DispatchQueue.main.async { callback([], (json as? [String: Any?], statusCode)) }
             }
         }
     }
@@ -218,7 +220,8 @@ class Lastfm {
                 //In case of error, won't do anything. The app will retry after to do the same request
             } else {
                 let httpResponse = response! as! HTTPURLResponse
-                callback(try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions(rawValue: 0)), httpResponse.statusCode)
+                let json = try? JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions(rawValue: 0))
+                callback(json, httpResponse.statusCode)
             }
         }
 
@@ -231,12 +234,11 @@ class Lastfm {
      - Returns: The MD5 in hex-string format of the parameters + secret.
      */
     private func getSignature(_ params: [String: String]) -> String {
-        return md5Hex(params.sorted { (a, b) -> Bool in
-            return a.key < b.key
-        }.map { $0.key + $0.value }
-        .reduce("") { (r, e) -> String in
-            return r + e
-        } + secret)
+        let paramsJoined = params
+            .sorted { $0.key < $1.key }
+            .map { $0.key + $0.value }
+            .joined(separator: "")
+        return md5Hex(paramsJoined + secret)
     }
 
 
@@ -262,8 +264,12 @@ class Lastfm {
                 sParams.append(($0.key, String(describing: $0.value)))
             }
         }
+        let paramsJoined = sParams
+            .sorted { $0.0 < $1.0 }
+            .map { $0.0 + $0.1 }
+            .joined(separator: "")
         return (
-            md5Hex(sParams.sorted { $0.0 < $1.0 }.map { $0.0 + $0.1 }.reduce("") { $0 + $1 } + secret),
+            md5Hex(paramsJoined + secret),
             sParams
         )
     }

@@ -185,8 +185,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, ServiceDelegate, NSWindowDel
     func serviceSongChanged(_ metadata: SongMetadata) {
         menu.setSongState(metadata, scrobbled: false)
         if menu.loggedIn && DBFacade.shared.sendScrobbles {
-            lastfm.updateNowPlaying(metadata) { (corrections, statusCode) in }
-            scrobbleNow()
+            lastfm.updateNowPlaying(metadata) { (corrections, statusCode) in
+                if (statusCode != 200) {
+                    self.log.warning("Could not update the now playing! \(statusCode) \(corrections["message"] ?? "<no msg>")")
+                    self.manageErrorResponse(corrections, statusCode)
+                } else {
+                    self.scrobbleNow()
+                    self.errorShown = false
+                }
+            }
         }
     }
 
@@ -235,8 +242,20 @@ class AppDelegate: NSObject, NSApplicationDelegate, ServiceDelegate, NSWindowDel
         if account != nil && (DBFacade.shared.sendScrobbles || force) {
             log.info("Sending scrobbles in cache...")
             if let scrobbles = DBFacade.shared.getScrobbles(limit: 50) {
+                if scrobbles.count == 0 {
+                    return
+                }
+
                 log.debug("Sending \(scrobbles.count) scrobbles...")
-                lastfm.scrobble(scrobbles) { (scrobbled) in
+                lastfm.scrobble(scrobbles) { (scrobbled, error) in
+                    if let error = error {
+                        let errorDict = error.0 ?? ["message": "Unknown"]
+                        self.log.warning("Sending scrobbles failed: \(error.1) \(String(describing: errorDict["message"]))")
+                        self.manageErrorResponse(errorDict, error.1)
+                        return
+                    }
+
+                    self.errorShown = false
                     try! DBFacade.shared.removeScrobbles(scrobbles)
                     self.log.info("Sent \(scrobbled.count) scrobbles")
                     //TODO Do something about unscrobbled songs
@@ -258,6 +277,45 @@ class AppDelegate: NSObject, NSApplicationDelegate, ServiceDelegate, NSWindowDel
     private func updateScrobbleCacheCount() {
         if let count = DBFacade.shared.getScrobblesCount() {
             menu.updateScrobbleCacheCount(count)
+        }
+    }
+
+    private var errorShown = false
+    private func manageErrorResponse(_ values: [String: Any?], _ statusCode: Int) {
+        if errorShown {
+            return
+        }
+
+        errorShown = true
+        DispatchQueue.main.async {
+            var message: String
+            var description: String
+            if statusCode >= 400 && statusCode < 500, let errorCode = values["error"] as? Int64 {
+                if errorCode == 9 {
+                    message = "Your session has been invalidated"
+                    description = "Re-login again to update your session and keep scrobbling!"
+                } else if errorCode == 11 || errorCode == 16 {
+                    message = "LastFM servers are unavailable"
+                    description = "Try again later"
+                } else {
+                    message = "There was a unknown problem"
+                    let e = values["message"] as? String ?? ""
+                    description = "LastFM sent a '\(e)' message. Wait some time to see if the error disappears. If the error is still there, try to log out and log in..."
+                }
+            } else if statusCode >= 500 {
+                message = "LastFM servers are failing"
+                description = "The LastFM servers are failing, but your scrobbles will be stored here"
+            } else {
+                message = "Some unknown error happened"
+                description = "Something bad happened in the background but nobody knows what happened. If the error persists, raise an issue to Github and provide the logs file."
+            }
+
+            let alert = NSAlert()
+            alert.messageText = message
+            alert.informativeText = description
+            alert.addButton(withTitle: "Ok")
+
+            alert.runModal()
         }
     }
 
