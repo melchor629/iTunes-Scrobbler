@@ -29,3 +29,12 @@
 "REQUEST_PERMISSION_TITLE"="Permiso del scrobbler para acceder al estado de %@";
 "REQUEST_PERMISSION_DENIED"="Necesitamos acceso al estado de la aplicación %@ para que funcione correctamente.\nPara ello, ve a Preferencias del Sistema > Seguridad y privacidad > Privacidad > Automatización, y permite a iTunes Scrobbler acceder a %@.";
 "IS_ALLOWED"="Tiene permiso";
+"LASTFM_ERROR_RELOGIN_MESSAGE"="Tu sesión ha caducado";
+"LASTFM_ERROR_RELOGIN_DESCRIPTION"="¡Vuelve a iniciar sesión y sigue scrobleando!";
+"LASTFM_ERROR_SERVERS_UNAVAILABLE_MESSAGE"="Los servidores de LastFM no están disponibles";
+"LASTFM_ERROR_SERVERS_UNAVAILABLE_DESCRIPTION"="Los servidores están fallando, pero tus scrobblings están a salvo. Prueba de nuevo más tarde...";
+"LASTFM_ERROR_INVALID_SIGNATURE_MESSAGE"="Hay un error en la petición a LastFM";
+"LASTFM_ERROR_INVALID_SIGNATURE_DESCRIPTION"="Este error no deberia ocurrir, pero ha ocurrido, por tanto hay un fallo en algún lugar. Por favor rellena un issue en Github...";
+"LASTFM_ERROR_UNKNOWN_MESSAGE"="Ha ocurrido algo desconocido";
+"LASTFM_ERROR_UNKNOWN_DESCRIPTION"="LastFM ha enviado este mensaje '%@'. Espera un tiempo. Si el error sigue ahí, cierra y vuelve a iniciar sesión o lanza un issue en Github";
+"LASTFM_ERROR_UNKNOWN_DESCRIPTION2"="Algo malo ha pasado entre las sombras y nadie sabe que ha sido. Si el error persiste, lanza un issue en Github y provee los logs.";

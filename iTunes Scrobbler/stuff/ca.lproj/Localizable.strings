@@ -29,3 +29,12 @@
 "REQUEST_PERMISSION_TITLE"="Permis del scrobbler per a accedir al estat de %@";
 "REQUEST_PERMISSION_DENIED"="Necesitamem accès a l'estat de l'aplicació %@ per a que funcioni correctament.\nPer aconseguir-ho, obri Preferencias del Sistema > Seguridad y privacidad > Privacidad > Automatización, i permiteix a iTunes Scrobbler accedir a %@.";
 "IS_ALLOWED"="Té permís";
+"LASTFM_ERROR_RELOGIN_MESSAGE"="La teva sesió ha caducat";
+"LASTFM_ERROR_RELOGIN_DESCRIPTION"="Torna a iniciar sesió i segueis scrobletjant!";
+"LASTFM_ERROR_SERVERS_UNAVAILABLE_MESSAGE"="Els servidors de LastFM no estan disponibles";
+"LASTFM_ERROR_SERVERS_UNAVAILABLE_DESCRIPTION"="Els servidors estan fallant, però els teus scrobblings estan ben guardats. Torna a probar de nou mes endavant...";
+"LASTFM_ERROR_INVALID_SIGNATURE_MESSAGE"="Hi ha un error en la petició a LastFM";
+"LASTFM_ERROR_INVALID_SIGNATURE_DESCRIPTION"="Aquest error no hauria d'ocurrir, pero ha ocorregut, doncs hi ha un error en qualque lloc. Per favor emplena un issue a Github...";
+"LASTFM_ERROR_UNKNOWN_MESSAGE"="No sabem que és, pero qualque cosa ha fallat";
+"LASTFM_ERROR_UNKNOWN_DESCRIPTION"="LastFM ha enviat aquest missatge '%@'. Espera un temps. Si l'error segueix, tanca i torna a iniciar sesió o emplena un issue a Github";
+"LASTFM_ERROR_UNKNOWN_DESCRIPTION2"="Un error maligne ha ocorregut entre les ombres i ningú sap que ha sigut. Si l'error persisteix, emplena un issue a Github.";

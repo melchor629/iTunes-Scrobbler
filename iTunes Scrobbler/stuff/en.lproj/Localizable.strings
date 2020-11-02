@@ -29,3 +29,12 @@
 "REQUEST_PERMISSION_TITLE"="Scrobbler permission to access to %@ status";
 "REQUEST_PERMISSION_DENIED"="The app needs access to %@ status to work correctly.\nTo allow that, go to System Preferences > Security and privacy > Privacy > Automatition, and allow iTunes Scrobbler to access to %@.";
 "IS_ALLOWED"="Is allowed";
+"LASTFM_ERROR_RELOGIN_MESSAGE"="Your session has been invalidated";
+"LASTFM_ERROR_RELOGIN_DESCRIPTION"="Re-login again to update your session and keep scrobbling!";
+"LASTFM_ERROR_SERVERS_UNAVAILABLE_MESSAGE"="LastFM servers are unavailable";
+"LASTFM_ERROR_SERVERS_UNAVAILABLE_DESCRIPTION"="The LastFM servers are failing, but your scrobbles will be stored here. Try again later...";
+"LASTFM_ERROR_INVALID_SIGNATURE_MESSAGE"="There is an error in the update or scrobble request";
+"LASTFM_ERROR_INVALID_SIGNATURE_DESCRIPTION"="This error should not happen, but it happened, so there is a bug somewhere. Please fill an issue to Github...";
+"LASTFM_ERROR_UNKNOWN_MESSAGE"="There was a unknown problem";
+"LASTFM_ERROR_UNKNOWN_DESCRIPTION"="LastFM sent a '%@' message. Wait some time to see if the error disappears. If the error is still there, try to log out and log in...";
+"LASTFM_ERROR_UNKNOWN_DESCRIPTION2"="Something bad happened in the background but nobody knows what happened. If the error persists, raise an issue to Github and provide the logs file.";

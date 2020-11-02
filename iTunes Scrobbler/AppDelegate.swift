@@ -292,22 +292,25 @@ class AppDelegate: NSObject, NSApplicationDelegate, ServiceDelegate, NSWindowDel
             var description: String
             if statusCode >= 400 && statusCode < 500, let errorCode = values["error"] as? Int64 {
                 if errorCode == 9 {
-                    message = "Your session has been invalidated"
-                    description = "Re-login again to update your session and keep scrobbling!"
+                    message = NSLocalizedString("LASTFM_ERROR_RELOGIN_MESSAGE", comment: "")
+                    description = NSLocalizedString("LASTFM_ERROR_RELOGIN_DESCRIPTION", comment: "")
                 } else if errorCode == 11 || errorCode == 16 {
-                    message = "LastFM servers are unavailable"
-                    description = "Try again later"
+                    message = NSLocalizedString("LASTFM_ERROR_SERVERS_UNAVAILABLE_MESSAGE", comment: "")
+                    description = NSLocalizedString("LASTFM_ERROR_SERVERS_UNAVAILABLE_DESCRIPTION", comment: "")
+                } else if errorCode == 13 {
+                    message = NSLocalizedString("LASTFM_ERROR_INVALID_SIGNATURE_MESSAGE", comment: "")
+                    description = NSLocalizedString("LASTFM_ERROR_INVALID_SIGNATURE_DESCRIPTION", comment: "")
                 } else {
-                    message = "There was a unknown problem"
+                    message = NSLocalizedString("LASTFM_ERROR_UNKNOWN_MESSAGE", comment: "")
                     let e = values["message"] as? String ?? ""
-                    description = "LastFM sent a '\(e)' message. Wait some time to see if the error disappears. If the error is still there, try to log out and log in..."
+                    description = NSLocalizedString("LASTFM_ERROR_UNKNOWN_DESCRIPTION", comment: "").replacingOccurrences(of: "%@", with: e)
                 }
             } else if statusCode >= 500 {
-                message = "LastFM servers are failing"
-                description = "The LastFM servers are failing, but your scrobbles will be stored here"
+                message = NSLocalizedString("LASTFM_ERROR_SERVERS_UNAVAILABLE_MESSAGE", comment: "")
+                description = NSLocalizedString("LASTFM_ERROR_SERVERS_UNAVAILABLE_DESCRIPTION", comment: "")
             } else {
-                message = "Some unknown error happened"
-                description = "Something bad happened in the background but nobody knows what happened. If the error persists, raise an issue to Github and provide the logs file."
+                message = NSLocalizedString("LASTFM_ERROR_UNKNOWN_MESSAGE", comment: "")
+                description = NSLocalizedString("LASTFM_ERROR_UNKNOWN_DESCRIPTION2", comment: "")
             }
 
             let alert = NSAlert()
