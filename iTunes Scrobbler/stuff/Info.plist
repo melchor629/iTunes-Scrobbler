@@ -32,9 +32,9 @@
 		<false/>
 	</dict>
 	<key>NSAppleEventsUsageDescription</key>
-	<string>Get current status for iTunes, to get the song name. You can change this permission in "System Preferences &gt; Security &amp; Privacy &gt; Privacy &gt; Automation".</string>
+	<string>Get current status for iTunes or Music, to get the song name. You can change this permission in &quot;System Preferences &gt; Security &amp; Privacy &gt; Privacy &gt; Automation&quot;.</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2018 Melchor Garau Madrigal. All rights reserved.</string>
+	<string>2018-2020 Melchor Garau Madrigal. All rights reserved.</string>
 	<key>NSMainStoryboardFile</key>
 	<string>Main</string>
 	<key>NSPrincipalClass</key>
