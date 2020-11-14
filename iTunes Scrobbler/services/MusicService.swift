@@ -29,7 +29,8 @@ tell application "Music"
 artist: " & my getOrNull(artist of current track) & "
 album: " & my getOrNull(album of current track) & "
 duration: " & (duration of current track as text) & "
-albumArtist: " & my getOrNull(album artist of current track)
+albumArtist: " & my getOrNull(album artist of current track) & "
+playedCount: " & my getOrNull(played count of current track)
 end tell
 """)
     private let getPlayerPositionScript = AppleScript("""

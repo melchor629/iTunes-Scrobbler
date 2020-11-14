@@ -26,6 +26,7 @@ struct SongMetadata {
     var albumArtistName: String?
     var albumName: String?
     var duration: Double? = 0.0
+    var playedCount: UInt?
 
     init() {}
 
@@ -45,10 +46,12 @@ struct SongMetadata {
             let artistNameHash = artistName?.hashValue ?? 0
             let albumArtistNameHash = albumArtistName?.hashValue ?? 0
             let albumNameHash = albumName?.hashValue ?? 0
+            let playedCountHash = playedCount?.hashValue ?? 0
             return trackTitleHash ^
                 (artistNameHash << 2) ^
                 (albumArtistNameHash << 4) ^
-                (albumNameHash << 6)
+                (albumNameHash << 6) ^
+                (playedCountHash << 8)
         }
     }
 
@@ -59,7 +62,7 @@ struct SongMetadata {
 }
 
 func ==(a: SongMetadata, b: SongMetadata) -> Bool {
-    return a.trackTitle == b.trackTitle && a.artistName == b.artistName && a.albumArtistName == b.albumArtistName && a.albumName == b.albumName
+    return a.trackTitle == b.trackTitle && a.artistName == b.artistName && a.albumArtistName == b.albumArtistName && a.albumName == b.albumName && a.playedCount == b.playedCount
 }
 
 func !=(a: SongMetadata, b: SongMetadata) -> Bool {

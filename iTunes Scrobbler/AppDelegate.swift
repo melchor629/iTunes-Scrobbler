@@ -93,9 +93,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, ServiceDelegate, NSWindowDel
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
-        if updater != nil {
-            updater!.stop()
-            updater!.applyUpdate()
+        if let updater = updater {
+            updater.stop()
+            updater.applyUpdate()
         }
     }
 
