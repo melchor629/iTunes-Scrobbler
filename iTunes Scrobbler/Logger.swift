@@ -36,15 +36,22 @@ class Logger {
             openlog(Bundle.main.bundleIdentifier!, LOG_PERROR | LOG_PID, LOG_USER)
             Logger.syslogInit = true
 
-            let logPath = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("Library/Logs/iTunesScrobbler").path
+            let logPath = FileManager.default
+                .homeDirectoryForCurrentUser
+                .appendingPathComponent("Library/Logs/iTunesScrobbler")
+                .path
             var isDir: ObjCBool = false
             if !FileManager.default.fileExists(atPath: logPath, isDirectory: &isDir) {
-                try? FileManager.default.createDirectory(atPath: logPath, withIntermediateDirectories: true, attributes: nil)
+                try? FileManager.default.createDirectory(atPath: logPath,
+                                                         withIntermediateDirectories: true,
+                                                         attributes: nil)
                 isDir = true
             }
             if !isDir.boolValue {
                 try? FileManager.default.removeItem(atPath: logPath)
-                try? FileManager.default.createDirectory(atPath: logPath, withIntermediateDirectories: false, attributes: nil)
+                try? FileManager.default.createDirectory(atPath: logPath,
+                                                         withIntermediateDirectories: false,
+                                                         attributes: nil)
             }
 
             Logger.dateFormatter = DateFormatter()
@@ -57,7 +64,9 @@ class Logger {
                 Logger.fileHandle = FileHandle(forUpdatingAtPath: logFilePath)
                 Logger.fileHandle?.seekToEndOfFile()
             } else {
-                FileManager.default.createFile(atPath: logFilePath, contents: nil, attributes: nil)
+                FileManager.default.createFile(atPath: logFilePath,
+                                               contents: nil,
+                                               attributes: nil)
                 Logger.fileHandle = FileHandle(forWritingAtPath: logFilePath)
             }
 
