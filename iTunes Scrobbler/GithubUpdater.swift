@@ -43,9 +43,12 @@ class Version {
 
 func <(a: Version, b: Version) -> Bool {
     if(a.patch == nil || b.patch == nil) {
-        return a.major < b.major || a.minor < b.minor
+        return a.major < b.major
+            || (a.major == b.major && a.minor < b.minor)
     } else {
-        return a.major < b.major || a.minor < b.minor || a.patch! < b.patch!
+        return a.major < b.major
+            || (a.major == b.major && a.minor < b.minor)
+            || (a.major == b.major && a.minor == b.minor && a.patch! < b.patch!)
     }
 }
 
