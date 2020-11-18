@@ -14,7 +14,7 @@ class ScrobblingsListViewController: NSViewController, NSTableViewDelegate, NSTa
     @IBOutlet weak var table: NSTableView!
 
     public static let deletedScrobbling = NSNotification.Name(rawValue: "me.melchor9000.iTunes-Scrobbler.ScrobblingsListViewController.deletedScrobbling")
-    
+
     private var list: [NSManagedObject] = []
 
     override func viewDidLoad() {
@@ -30,6 +30,10 @@ class ScrobblingsListViewController: NSViewController, NSTableViewDelegate, NSTa
             view.addSubview(vibrant, positioned: .below, relativeTo: nil)
         }
 
+        if #available(OSX 10.13, *) {
+            table.usesAutomaticRowHeights = true
+        }
+
         DistributedNotificationCenter.default().addObserver(
             self,
             selector: #selector(ScrobblingsListViewController.addedScrobbling),
@@ -42,6 +46,23 @@ class ScrobblingsListViewController: NSViewController, NSTableViewDelegate, NSTa
             name: AppDelegate.sentScrobblings,
             object: nil
         )
+    }
+
+    override func viewWillDisappear() {
+        DistributedNotificationCenter.default().removeObserver(
+            self,
+            name: AppDelegate.addedScrobbling,
+            object: nil
+        )
+        DistributedNotificationCenter.default().removeObserver(
+            self,
+            name: AppDelegate.sentScrobblings,
+            object: nil
+        )
+    }
+
+    @IBAction func onMenuRemoveClicked(_ sender: Any) {
+        remove(row: table.clickedRow)
     }
 
     @objc func addedScrobbling(_ notification: Notification) {
@@ -63,34 +84,46 @@ class ScrobblingsListViewController: NSViewController, NSTableViewDelegate, NSTa
     }
 
     public func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-        let view = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "MainCell"), owner: self) as? ScrobblingListItemView
+        let view = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "MainCell"), owner: self) as! ScrobblingListItemView
         let item = list[row]
-        view?.trackAndArtistLabel.stringValue = "\(item.value(forKey: "track")! as! String) - \(item.value(forKey: "artist")! as! String)"
-        if let album = item.value(forKey: "album") as? String { view?.albumLabel.stringValue = album } else { view?.albumLabel.stringValue = "" }
-        let date = item.value(forKey: "timestamp") as! Date
-        view?.whenLabel.stringValue = DateFormatter.localizedString(from: date, dateStyle: .short, timeStyle: .short)
-        if NSAppKitVersion.current <= NSAppKitVersion.macOS10_13_4 {
-            view?.nothingView.isHidden = false
+
+        view.trackAndArtistLabel.stringValue = "\(item.value(forKey: "track")! as! String) - \(item.value(forKey: "artist")! as! String)"
+        if let album = item.value(forKey: "album") as? String {
+            view.albumLabel.stringValue = album
+        } else {
+            view.albumLabel.stringValue = ""
         }
+
+        let date = item.value(forKey: "timestamp") as! Date
+        view.whenLabel.stringValue = DateFormatter.localizedString(from: date, dateStyle: .short, timeStyle: .short)
+
         return view
     }
 
     func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
-        return false
+        return true
     }
 
     func tableView(_ tableView: NSTableView, rowActionsForRow row: Int, edge: NSTableView.RowActionEdge) -> [NSTableViewRowAction] {
         return [ NSTableViewRowAction(style: .destructive, title: "Remove", handler: { (action, row) in
-            self.table.removeRows(at: IndexSet(integer: row), withAnimation: .effectFade)
-            try! DBFacade.shared.removeScrobbles([ self.list[row] ])
-            self.list.remove(at: row)
-            DistributedNotificationCenter.default().postNotificationName(
-                ScrobblingsListViewController.deletedScrobbling,
-                object: nil,
-                userInfo: nil,
-                options: .deliverImmediately
-            )
+            self.remove(row: row)
         }) ]
+    }
+
+    func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
+        return 54
+    }
+
+    private func remove(row: Int) {
+        table.removeRows(at: IndexSet(integer: row), withAnimation: .effectFade)
+        try! DBFacade.shared.removeScrobbles([list[row]])
+        list.remove(at: row)
+        DistributedNotificationCenter.default().postNotificationName(
+            ScrobblingsListViewController.deletedScrobbling,
+            object: nil,
+            userInfo: nil,
+            options: .deliverImmediately
+        )
     }
 
 }
@@ -100,20 +133,5 @@ class ScrobblingListItemView: NSTableCellView {
     @IBOutlet weak var trackAndArtistLabel: NSTextField!
     @IBOutlet weak var albumLabel: NSTextField!
     @IBOutlet weak var whenLabel: NSTextField!
-    @IBOutlet weak var nothingView: NothingView!
-
-}
-
-class NothingView: NSView {
-
-    public override func draw(_ dirtyRect: NSRect) {
-        let bounds = self.bounds
-        let shape = NSBezierPath(rect: bounds)
-        let gradient = NSGradient(colorsAndLocations:
-            (NSColor(red: 1, green: 1, blue: 1, alpha: 0), 0),
-            (NSColor(red: 1, green: 1, blue: 1, alpha: 1), 10 / bounds.size.width)
-        )
-        gradient?.draw(in: shape, angle: 0)
-    }
 
 }
