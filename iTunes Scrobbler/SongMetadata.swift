@@ -38,6 +38,7 @@ struct SongMetadata {
         albumArtistName = emptyIsNil(managedObject.value(forKey: "albumArtist") as? String)
         albumName = emptyIsNil(managedObject.value(forKey: "album") as? String)
         duration = (managedObject.value(forKey: "duration") as! NSNumber).doubleValue
+        playedCount = (managedObject.value(forKey: "playedCount") as? NSNumber)?.uintValue
     }
 
     var hash: Int {

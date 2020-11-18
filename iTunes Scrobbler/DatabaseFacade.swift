@@ -93,6 +93,7 @@ class DBFacade {
         scrobbling.setValue(metadata.duration, forKey: "duration")
         scrobbling.setValue(time, forKey: "timestamp")
         scrobbling.setValue(metadata.trackTitle, forKey: "track")
+        scrobbling.setValue(metadata.playedCount, forKey: "playedCount")
         try context.save()
     }
 
