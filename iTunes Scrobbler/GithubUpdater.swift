@@ -8,6 +8,11 @@
 
 import Foundation
 
+fileprivate enum GithubUpdaterError: Error {
+    case InvalidJson(path: String)
+    case InvalidRelease(path: String)
+}
+
 /// Version struct for "x.x.x" strings.
 class Version {
     let major: Int
@@ -62,26 +67,58 @@ class Release {
     let tag: Version?
     let assets: [ReleaseAsset]
 
-    init(_ json: [String: Any]) {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-        if let publishedAtString = json["publishedAt"]! as? String {
-            publishedAt = formatter.date(from: publishedAtString)!
+    init(_ json: [String: Any]) throws {
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = .withInternetDateTime
+        if let publishedAtString = json["publishedAt"] as? String {
+            guard let publishedAt = formatter.date(from: publishedAtString) else {
+                throw GithubUpdaterError.InvalidRelease(path: "publishedAt")
+            }
+
+            self.publishedAt = publishedAt
         } else {
             publishedAt = nil
         }
-        description = json["description"]! as! String
-        name = json["name"]! as! String
-        isDraft = json["isDraft"]! as! Bool
-        isPrerelease = json["isPrerelease"]! as! Bool
-        if let tagDict = json["tag"]! as? [String: String] {
-            tag = Version(tagDict["name"]!)
+
+        guard let description = json["description"] as? String else {
+            throw GithubUpdaterError.InvalidRelease(path: "description")
+        }
+        guard let name = json["name"] as? String else {
+            throw GithubUpdaterError.InvalidRelease(path: "name")
+        }
+        guard let isDraft = json["isDraft"] as? Bool else {
+            throw GithubUpdaterError.InvalidRelease(path: "isDraft")
+        }
+        guard let isPrerelease = json["isPrerelease"] as? Bool else {
+            throw GithubUpdaterError.InvalidRelease(path: "isPrerelease")
+        }
+
+        self.description = description
+        self.name = name
+        self.isDraft = isDraft
+        self.isPrerelease = isPrerelease
+        if let tagDict = json["tag"] as? [String: String] {
+            guard let name = tagDict["name"] else {
+                throw GithubUpdaterError.InvalidRelease(path: "tag.name")
+            }
+            tag = Version(name)
         } else {
             tag = nil
         }
 
-        let releaseAssets = (json["releaseAssets"]! as! [String: [[String: [String: String]]]])["edges"]!
-        assets = releaseAssets.map { ReleaseAsset($0["node"]!) }
+        guard let releaseAssets = json["releaseAssets"] as? [String: [[String: [String: String]]]] else {
+            throw GithubUpdaterError.InvalidRelease(path: "releaseAssets")
+        }
+        guard let releaseAssetsEdges = releaseAssets["edges"] else {
+            throw GithubUpdaterError.InvalidRelease(path: "releaseAssets.edges")
+        }
+        assets = try releaseAssetsEdges.map {
+            let i = releaseAssetsEdges.firstIndex(of: $0)!.distance(to: releaseAssetsEdges.startIndex)
+            guard let node = $0["node"] else {
+                throw GithubUpdaterError.InvalidRelease(path: "releaseAssets.edges[\(i)].node")
+            }
+            return try ReleaseAsset(node, i)
+        }
     }
 }
 
@@ -90,9 +127,16 @@ class ReleaseAsset {
     let name: String
     let url: URL
 
-    init(_ json: [String: String]) {
-        name = json["name"]!
-        url = URL(string: json["downloadUrl"]!)!
+    init(_ json: [String: String], _ index: Int) throws {
+        guard let name = json["name"] else {
+            throw GithubUpdaterError.InvalidRelease(path: "releaseAssets.edges[\(index)].node.name")
+        }
+        guard let downloadUrl = json["downloadUrl"] else {
+            throw GithubUpdaterError.InvalidRelease(path: "releaseAssets.edges[\(index)].node.downloadUrl")
+        }
+
+        self.name = name
+        url = URL(string: downloadUrl)!
     }
 }
 
@@ -109,6 +153,7 @@ class GithubUpdater {
     init() {
         self.token = Tokens.githubToken
         self.appVersion = Version(Bundle.main.infoDictionary!["CFBundleShortVersionString"]! as! String)
+        self.log.info("App is in version \(self.appVersion.debugDescription)")
     }
 
     /// Starts the background task of checking for updates (once per hour).
@@ -158,18 +203,52 @@ class GithubUpdater {
             "query": "query { repository(owner:\\"melchor629\\", name:\\"iTunes-Scrobbler\\") { releases(first:20, orderBy: { field: CREATED_AT, direction: DESC }) { edges { node { publishedAt description name isDraft isPrerelease tag { name } releaseAssets(first:10) { edges { node { downloadUrl name } } } } } } } }"
         }
         """.data(using: .utf8)
-        request.addValue("bearer \(token)", forHTTPHeaderField: "Authorization")
+        request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         URLSession.shared.dataTask(with: request) { (data, response, error) in
-            if error == nil {
-                if (response as! HTTPURLResponse).statusCode == 200 {
-                    let json = try! JSONSerialization.jsonObject(with: data!, options: []) as! [String: Any]
-                    let data = json["data"] as! [String: Any]
-                    let repository = data["repository"] as! [String: Any]
-                    let releases = repository["releases"] as! [String: Any]
-                    let edge = releases["edges"] as! [[String: [String: Any]]]
-                    let _releases = edge.map { Release($0["node"]!) }
-                    self.doSomethingWithTheReleases(_releases)
+            if error != nil {
+                self.log.error("Could not check for updates: \(error!)")
+            }
+
+            let res = response as! HTTPURLResponse
+            if res.statusCode != 200 {
+                self.log.warning("Check for updates response is not 200 OK: \(res.statusCode)")
+                self.log.debug("Response body: \(String(data: data!, encoding: .utf8) ?? "<>")")
+                return
+            }
+
+            do {
+                guard let json = try JSONSerialization.jsonObject(with: data!, options: []) as? [String: Any] else {
+                    throw GithubUpdaterError.InvalidJson(path: "")
                 }
+                guard let data = json["data"] as? [String: Any] else {
+                    throw GithubUpdaterError.InvalidJson(path: "data")
+                }
+                guard let repository = data["repository"] as? [String: Any] else {
+                    throw GithubUpdaterError.InvalidJson(path: "data.repository")
+                }
+                guard let releases = repository["releases"] as? [String: Any] else {
+                    throw GithubUpdaterError.InvalidJson(path: "data.repository.releases")
+                }
+                guard let edge = releases["edges"] as? [[String: [String: Any]]] else {
+                    throw GithubUpdaterError.InvalidJson(path: "data.repository.releases.edges")
+                }
+
+                let _releases = try edge.map { (e: [String: [String: Any]]) throws -> Release? in
+                    do {
+                        return try Release(e["node"]!)
+                    } catch let GithubUpdaterError.InvalidRelease(path) {
+                        self.log.warning("Invalid release ([data.repository.releases.edges[?].node.\(path)): \(e["node"]!)")
+                    }
+                    return nil
+                }
+                self.doSomethingWithTheReleases(_releases.filter { $0 != nil }.map { $0! })
+            } catch let GithubUpdaterError.InvalidJson(path) {
+                self.log.error("Invalid json structure in path \(path)")
+                self.log.debug("Response body: \(String(data: data!, encoding: .utf8) ?? "<>")")
+            } catch {
+                self.log.error("Cannot parse check for update response: \(error)")
+                self.log.debug("Response body: \(String(data: data!, encoding: .utf8) ?? "<>")")
+                self.log.debug("Content Type: \(res.allHeaderFields["Content-Type"] ?? "unknown")")
             }
         }.resume()
     }
