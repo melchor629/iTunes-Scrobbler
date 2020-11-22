@@ -9,7 +9,7 @@ assignees: melchor629
 
 ## Information
 
- - **macOS version**: 10.?.?
+ - **macOS version**: 1?.?.?
  - **App version**: _Version from releases or built by your own from sources_
  - **Xcode version**: _Applicable only if you built from sources_
  - **Have internet connection?**: _yes or not (only in the moment of the issue)_
@@ -28,7 +28,7 @@ _sometimes this is not applicable, but it does, fill it, it's helpful_
 
 ## Crash log
 
-_if the error has something to do with a crash, please look after the logs (located at `/Users/<YOUR_USER>/Library/Logs/iTunesScrobbler/`) and the crash report (`/Users/<YOUR_USER>/Library/Logs/DiagnosticReports`) and grab the latest. We would like to have at least the part of the log near the crash and the full crash report._
+_if the error has something to do with a crash, please look after the logs (located at `/Users/<YOUR_USER>/Library/Logs/iTunesScrobbler/`) and the crash report (`/Users/<YOUR_USER>/Library/Logs/DiagnosticReports`) and grab the latest. Crash reports can also be obtained from *Console* app (starting from macOS 11). We would like to have at least the part of the log near the crash and the full crash report._
 
 ## Extra
 
