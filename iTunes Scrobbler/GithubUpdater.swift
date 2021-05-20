@@ -209,9 +209,10 @@ class GithubUpdater {
                 self.log.error("Could not check for updates: \(error!)")
             }
 
-            let res = response as! HTTPURLResponse
-            if res.statusCode != 200 {
-                self.log.warning("Check for updates response is not 200 OK: \(res.statusCode)")
+            let res = response as? HTTPURLResponse
+            let statusCode = (res?.statusCode ?? -1)
+            if statusCode != 200 {
+                self.log.warning("Check for updates response is not 200 OK: \(statusCode)")
                 self.log.debug("Response body: \(String(data: data!, encoding: .utf8) ?? "<>")")
                 return
             }
@@ -248,7 +249,7 @@ class GithubUpdater {
             } catch {
                 self.log.error("Cannot parse check for update response: \(error)")
                 self.log.debug("Response body: \(String(data: data!, encoding: .utf8) ?? "<>")")
-                self.log.debug("Content Type: \(res.allHeaderFields["Content-Type"] ?? "unknown")")
+                self.log.debug("Content Type: \(res?.allHeaderFields["Content-Type"] ?? "unknown")")
             }
         }.resume()
     }
