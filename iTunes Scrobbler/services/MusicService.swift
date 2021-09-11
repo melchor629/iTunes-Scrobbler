@@ -94,6 +94,9 @@ end tell
     private func checkAppleScriptPermission() {
         if #available(macOS 10.14, *) {
             if !isRunning { return }
+            // on macOS 11 it seems it is blocking the AE call,
+            // but request is still raised when using AE.
+            if #available(macOS 11, *) { return }
             //See https://www.felix-schwarz.org/blog/2018/08/new-apple-event-apis-in-macos-mojave
             let desc = NSAppleEventDescriptor(bundleIdentifier: "com.apple.Music").aeDesc!
             let status = AEDeterminePermissionToAutomateTarget(desc, 0x61657674, typeWildCard, true)
