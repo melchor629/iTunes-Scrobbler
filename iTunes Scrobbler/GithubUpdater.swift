@@ -205,20 +205,28 @@ class GithubUpdater {
         """.data(using: .utf8)
         request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         URLSession.shared.dataTask(with: request) { (data, response, error) in
-            if error != nil {
-                self.log.error("Could not check for updates: \(error!)")
+            if let error = error {
+                self.log.error("Could not check for updates: \(error)")
             }
 
             let res = response as? HTTPURLResponse
             let statusCode = (res?.statusCode ?? -1)
             if statusCode != 200 {
                 self.log.warning("Check for updates response is not 200 OK: \(statusCode)")
-                self.log.debug("Response body: \(String(data: data!, encoding: .utf8) ?? "<>")")
+                self.log.debug("Headers: \(res?.allHeaderFields ?? [:])")
+                if let data = data {
+                    self.log.debug("Response body: \(String(data: data, encoding: .utf8) ?? "<>")")
+                }
+                return
+            }
+
+            guard let data = data else {
+                self.log.debug("Response is empty")
                 return
             }
 
             do {
-                guard let json = try JSONSerialization.jsonObject(with: data!, options: []) as? [String: Any] else {
+                guard let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
                     throw GithubUpdaterError.InvalidJson(path: "")
                 }
                 guard let data = json["data"] as? [String: Any] else {
@@ -245,10 +253,10 @@ class GithubUpdater {
                 self.doSomethingWithTheReleases(_releases.filter { $0 != nil }.map { $0! })
             } catch let GithubUpdaterError.InvalidJson(path) {
                 self.log.error("Invalid json structure in path \(path)")
-                self.log.debug("Response body: \(String(data: data!, encoding: .utf8) ?? "<>")")
+                self.log.debug("Response body: \(String(data: data, encoding: .utf8) ?? "<>")")
             } catch {
                 self.log.error("Cannot parse check for update response: \(error)")
-                self.log.debug("Response body: \(String(data: data!, encoding: .utf8) ?? "<>")")
+                self.log.debug("Response body: \(String(data: data, encoding: .utf8) ?? "<>")")
                 self.log.debug("Content Type: \(res?.allHeaderFields["Content-Type"] ?? "unknown")")
             }
         }.resume()
